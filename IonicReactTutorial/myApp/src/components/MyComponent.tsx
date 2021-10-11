@@ -22,26 +22,26 @@ const MyComponent: React.FC<RouteComponentProps> = (props) => {
                 <IonList>
                     <IonItem>
                         <IonCheckbox slot="start" />
-            <IonLabel>
-                <h1>Create Idea</h1>
-    <IonNote>Run Idea by Brandy</IonNote>
-    </IonLabel>
-    <IonBadge color="success" slot="end">
-        5 Days
-    </IonBadge>
-    </IonItem>
-    </IonList>
+                        <IonLabel>
+                            <h1>Create Idea</h1>
+                        <IonNote>Run Idea by Brandy</IonNote>
+                        </IonLabel>
+                        <IonBadge color="success" slot="end">
+                            5 Days
+                        </IonBadge>
+                    </IonItem>
+                </IonList>
 
-    <IonFab vertical="bottom" horizontal="end" slot="fixed">
-    <IonFabButton onClick={() => props.history.push('/new')}>
-    <IonIcon icon={add} />
-    </IonFabButton>
-    </IonFab>
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                    <IonFabButton onClick={() => props.history.push('/new')}>
+                        <IonIcon icon={add} />
+                    </IonFabButton>
+                </IonFab>
 
-    </IonContent>
-    <ExploreContainer />
-    </IonPage>
-);
+            </IonContent>
+            <ExploreContainer />
+        </IonPage>
+    );
 };
 
 export default MyComponent;

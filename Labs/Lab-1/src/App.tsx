@@ -21,19 +21,16 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import MyComponent from "./components/MyComponent";
-import NewItem from "./pages/NewItem";
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home" component={Home}></Route>
-        <Route exact path="/mycomponent" component={MyComponent}></Route>
-        <Route exact path="/dashboard" component={DashboardPage}></Route>
-        <Route path="/new" component={NewItem}></Route>
+        <Route exact path="/home">
+          <Home />
+        </Route>
         <Route exact path="/">
-          <Redirect to="/mycomponent" />
+          <Redirect to="/home" />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
