@@ -1,0 +1,34 @@
+ion-button (attributes: fill="outline")
+ion-item
+ion-label
+ion-input (attributes: type...)
+
+ion-app
+ion-content
+ion-header
+ion-toolbar
+ion-title
+
+classes: ion-text-center, ion-margin
+
+ion-grid (ion-row, ion-col)
+ion-icon (attributes: slot=...)
+
+ion-card
+
+ion-react-router
+ion-react-outlet
+
+conditionals: use curly braces
+	example: { someBooleanVariable && <SomeComponent/> }
+
+
+ion-alert (use react fragments)
+ion-segment, ion-segment-button (allows to choose between different values)
+
+To define props in a functional component, do like the following:
+const SomeComponent: React.FC<{somePropName: string}> = props => {
+	return (
+		<BlahBlah/>
+	)
+};
