@@ -6,7 +6,7 @@ import {
   IonHeader,
   IonInput,
   IonLoading,
-  IonPage,
+  IonPage, IonSelect, IonSelectOption,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
@@ -24,6 +24,7 @@ interface ItemEditProps extends RouteComponentProps<{
 const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const { items, saving, savingError, saveItem } = useContext(ItemContext);
   const [text, setText] = useState('');
+  const [category, setCategory] = useState('');
   const [item, setItem] = useState<ItemProps>();
   useEffect(() => {
     log('useEffect');
@@ -35,7 +36,8 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
     }
   }, [match.params.id, items]);
   const handleSave = () => {
-    const editedItem = item ? { ...item, text } : { text };
+    const editedItem = { ...item, text, category};
+    console.log(editedItem);
     saveItem && saveItem(editedItem).then(() => history.goBack());
   };
   log('render');
@@ -53,6 +55,12 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
       </IonHeader>
       <IonContent>
         <IonInput value={text} onIonChange={e => setText(e.detail.value || '')} />
+        <IonSelect value={category} placeholder="Select One" onIonChange={e => setCategory(e.detail.value)}>
+          <IonSelectOption value="Do">Do</IonSelectOption>
+          <IonSelectOption value="Decide">Decide</IonSelectOption>
+          <IonSelectOption value="Delegate">Delegate</IonSelectOption>
+          <IonSelectOption value="Delete">Delete</IonSelectOption>
+        </IonSelect>
         <IonLoading isOpen={saving} />
         {savingError && (
           <div>{savingError.message || 'Failed to save item'}</div>

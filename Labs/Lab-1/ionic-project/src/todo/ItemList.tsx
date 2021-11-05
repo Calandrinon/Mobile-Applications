@@ -37,8 +37,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                 <h1>Do</h1>
                 {items && (
                     <IonList>
-                      {items.map(({ _id, text }) =>
-                          <Item key={_id} _id={_id} text={text} onEdit={id => history.push(`/item/${id}`)}/>)}
+                      {items.filter((item => item.category === "Do")).map(({ _id, text , category}) =>
+                          <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)}/>)}
                     </IonList>
                 )}
             </IonCol>
@@ -46,8 +46,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
               <h1>Decide</h1>
               {items && (
                   <IonList>
-                    {items.map(({ _id, text }) =>
-                        <Item key={_id} _id={_id} text={text} onEdit={id => history.push(`/item/${id}`)}/>)}
+                    {items.filter((item => item.category === "Decide")).map(({ _id, text, category}) =>
+                        <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)}/>)}
                   </IonList>
               )}
             </IonCol>
@@ -57,8 +57,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
               <h1>Delegate</h1>
               {items && (
                   <IonList>
-                    {items.map(({ _id, text }) =>
-                        <Item key={_id} _id={_id} text={text} onEdit={id => history.push(`/item/${id}`)}/>)}
+                    {items.filter((item => item.category === "Delegate")).map(({ _id, text , category}) =>
+                        <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)}/>)}
                   </IonList>
               )}
             </IonCol>
@@ -66,8 +66,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
               <h1>Delete</h1>
               {items && (
                   <IonList>
-                    {items.map(({ _id, text }) =>
-                        <Item key={_id} _id={_id} text={text} onEdit={id => history.push(`/item/${id}`)}/>)}
+                    {items.filter((item => item.category === "Delete")).map(({ _id, text, category}) =>
+                        <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)}/>)}
                   </IonList>
               )}
             </IonCol>
