@@ -42,7 +42,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="success">
           <IonTitle>Edit</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={handleSave}>

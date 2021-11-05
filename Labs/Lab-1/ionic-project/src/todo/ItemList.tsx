@@ -25,8 +25,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Item List</IonTitle>
+        <IonToolbar color="success">
+          <IonTitle>Tasks</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -34,6 +34,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
         <IonGrid>
           <IonRow>
             <IonCol>
+                <h1>Do</h1>
                 {items && (
                     <IonList>
                       {items.map(({ _id, text }) =>
@@ -42,6 +43,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                 )}
             </IonCol>
             <IonCol>
+              <h1>Decide</h1>
               {items && (
                   <IonList>
                     {items.map(({ _id, text }) =>
@@ -52,6 +54,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
           </IonRow>
           <IonRow>
             <IonCol>
+              <h1>Delegate</h1>
               {items && (
                   <IonList>
                     {items.map(({ _id, text }) =>
@@ -60,6 +63,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
               )}
             </IonCol>
             <IonCol>
+              <h1>Delete</h1>
               {items && (
                   <IonList>
                     {items.map(({ _id, text }) =>

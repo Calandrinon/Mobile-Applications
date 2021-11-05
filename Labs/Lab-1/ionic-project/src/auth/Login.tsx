@@ -10,10 +10,11 @@ import {
     IonLoading,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, IonIcon
 } from '@ionic/react';
 import { AuthContext } from './AuthProvider';
 import { getLogger } from '../core';
+import { keyOutline } from 'ionicons/icons';
 
 const log = getLogger('Login');
 
@@ -37,7 +38,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="success">
           <IonTitle>Authenticate</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -68,7 +69,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
                   <IonCol></IonCol>
               </IonRow>
               <IonRow class="ion-justify-content-center">
-                  <IonButton onClick={handleLogin} fill="outline" color="dark">Login</IonButton>
+                  <IonButton onClick={handleLogin} fill="outline" color="dark"> <IonIcon slot="start" icon={keyOutline}></IonIcon> Login</IonButton>
               </IonRow>
           </IonGrid>
       </IonContent>
