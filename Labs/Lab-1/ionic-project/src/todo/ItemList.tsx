@@ -21,6 +21,8 @@ const log = getLogger('ItemList');
 
 const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
   const { items, fetching, fetchingError } = useContext(ItemContext);
+  console.log(`Items: ${JSON.stringify(items)}`);
+  console.log(items);
   log('render');
   return (
     <IonPage>
