@@ -1,0 +1,7 @@
+{
+  "name": "pagingFilteringApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
