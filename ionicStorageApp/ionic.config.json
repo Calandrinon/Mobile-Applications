@@ -1,0 +1,7 @@
+{
+  "name": "storageApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
