@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import userStore from './store';
 import jwt from 'jsonwebtoken';
 import { jwtConfig } from '../utils';
+import noteStore from "../note/store";
 
 export const router = new Router();
 
@@ -33,4 +34,10 @@ router.post('/login', async (ctx) => {
     response.body = { issue: [{ error: 'Invalid credentials' }] };
     response.status = 400; // bad request
   }
+});
+
+router.get('/users', async (ctx) => {
+  const response = ctx.response;
+  response.body = await userStore.getAll();
+  response.status = 200;
 });
