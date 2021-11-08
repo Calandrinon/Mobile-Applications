@@ -13,11 +13,11 @@ export function withLogs<T>(promise: Promise<ResponseProps<T>>, fnName: string):
   log(`${fnName} - started`);
   return promise
     .then(res => {
-      log(`${fnName} - succeeded`);
+      log(`${fnName} - succeeded: ${res}`);
       return Promise.resolve(res.data);
     })
     .catch(err => {
-      log(`${fnName} - failed`);
+      log(`${fnName} - failed: ${err}`);
       return Promise.reject(err);
     });
 }

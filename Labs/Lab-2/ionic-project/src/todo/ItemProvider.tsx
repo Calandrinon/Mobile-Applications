@@ -132,11 +132,9 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
         if (canceled) {
           return;
         }
-        console.log(`ITEM PROVIDER DEBUGGING: ${JSON.stringify(message)}`);
         const { type, payload: item } = message;
         let parsedItemJSON = JSON.parse(JSON.stringify(item));
         log(`ws message, item ${type}`);
-        console.log(`THE ITEM WITH TYPE ${type}: ${parsedItemJSON}`);
         if (type === 'created' || type === 'updated') {
           dispatch({ type: SAVE_ITEM_SUCCEEDED, payload: { item } });
         }

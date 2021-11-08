@@ -1,0 +1,48 @@
+import axios from 'axios';
+import { authConfig, baseUrl, getLogger, withLogs } from '../core';
+import {UserProps} from "./UserProps";
+
+const usersUrl = `http://${baseUrl}/api/auth/users`;
+
+export const getUsers: (token: string) => Promise<UserProps[]> = token => {
+    return withLogs(axios.get(usersUrl, authConfig(token)), 'getUsers');
+}
+
+/**
+export const createItem: (token: string, item: ItemProps) => Promise<ItemProps[]> = (token, item) => {
+    return withLogs(axios.post(itemUrl, item, authConfig(token)), 'createItem');
+}
+
+export const updateItem: (token: string, item: ItemProps) => Promise<ItemProps[]> = (token, item) => {
+    return withLogs(axios.put(`${itemUrl}/${item._id}`, item, authConfig(token)), 'updateItem');
+}
+
+interface MessageData {
+    type: string;
+    payload: ItemProps;
+}
+
+const log = getLogger('ws');
+
+export const newWebSocket = (token: string, onMessage: (data: MessageData) => void) => {
+    const ws = new WebSocket(`ws://${baseUrl}`);
+    ws.onopen = () => {
+        log('web socket onopen');
+        ws.send(JSON.stringify({ type: 'authorization', payload: { token } }));
+    };
+    ws.onclose = () => {
+        log('web socket onclose');
+    };
+    ws.onerror = error => {
+        log('web socket onerror', error);
+    };
+    ws.onmessage = messageEvent => {
+        log('web socket onmessage');
+        console.log(`From itemApi.tsx: data = ${messageEvent.data}`);
+        onMessage(JSON.parse(messageEvent.data));
+    };
+    return () => {
+        ws.close();
+    }
+}
+**/
