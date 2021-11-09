@@ -27,6 +27,12 @@ router.post('/login', async (ctx) => {
   const credentials = ctx.request.body;
   const response = ctx.response;
   const user = await userStore.findOne({ username: credentials.username });
+  console.log("/login AUTH user");
+  console.log(user);
+  console.log("CREDENTIALS PASSWORD:");
+  console.log(credentials.password);
+  console.log("USER PASSWORD:");
+  console.log(user.password);
   if (user && credentials.password === user.password) {
     response.body = { token: createToken(user) };
     response.status = 201; // created
@@ -40,4 +46,22 @@ router.get('/users', async (ctx) => {
   const response = ctx.response;
   response.body = await userStore.getAll();
   response.status = 200;
+});
+
+router.post("/users", async (ctx) => {
+  const request = ctx.request;
+  const response = ctx.response;
+  const username = request.body.username;
+  const user = await userStore.findOne({username: username});
+  response.body = {id: user._id};
+});
+
+router.put('/users/:id', async (ctx) => {
+  const userId = ctx.params.id;
+  const userDetails = ctx.request.body;
+  console.log("User details:");
+  console.log(userDetails);
+  await userStore.update({_id: userId}, userDetails);
+  console.log("Update completed.");
+  ctx.response.status = 200;
 });
