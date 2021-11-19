@@ -55,7 +55,6 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
                   status: false
               });
           })();
-          return event.returnValue = 'Are you sure you want to close?';
       });
     return <Redirect to={{ pathname: '/' }} />
   }

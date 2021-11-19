@@ -35,13 +35,6 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
     const { appState } = useAppState();
 
     useEffect(() => {
-        window.addEventListener('beforeunload', (event) => {
-            (async () => {
-                console.log(`Username, password and token: ${username}; ${password}; ${token}`);
-                let userId: any = await getUserId(String(username), token);
-                await logOff(token, userId);
-            })();
-        });
         const fetchUsers = async () => {
             const response = await getUsers(token);
             console.log("THIS IS THE RESPONSE CONTAINING THE USERS:");
