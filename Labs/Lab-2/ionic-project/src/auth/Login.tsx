@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import {
@@ -14,7 +14,8 @@ import {
 } from '@ionic/react';
 import { AuthContext } from './AuthProvider';
 import { getLogger } from '../core';
-import { keyOutline } from 'ionicons/icons';
+import {compassSharp, keyOutline} from 'ionicons/icons';
+import { updateUser, getUserId } from "../todo/userApi";
 
 const log = getLogger('Login');
 
@@ -24,15 +25,25 @@ interface LoginState {
 }
 
 export const Login: React.FC<RouteComponentProps> = ({ history }) => {
-  const { isAuthenticated, isAuthenticating, login, authenticationError } = useContext(AuthContext);
+  const { isAuthenticated, isAuthenticating, login, authenticationError, token } = useContext(AuthContext);
   const [state, setState] = useState<LoginState>({});
   const { username, password } = state;
+
   const handleLogin = () => {
     log('handleLogin...');
     login?.(username, password);
   };
   log('render');
   if (isAuthenticated) {
+      (async () => {
+          let userId: any = await getUserId(String(username), token);
+          await updateUser(token, {
+              _id: userId.id,
+              username: String(username),
+              password: String(password),
+              status: true
+          });
+      })();
     return <Redirect to={{ pathname: '/' }} />
   }
   return (
@@ -55,6 +66,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
                               username: e.detail.value || ''
                           })}/>
                       <IonInput
+                          type="password"
                           placeholder="Password"
                           value={password}
                           onIonChange={e => setState({
