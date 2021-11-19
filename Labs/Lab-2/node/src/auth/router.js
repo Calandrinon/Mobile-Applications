@@ -56,6 +56,18 @@ router.post("/users", async (ctx) => {
   response.body = {id: user._id};
 });
 
+router.post("/getUsernameById", async (ctx) => {
+  const request = ctx.request;
+  const response = ctx.response;
+  const userId = request.body.userId;
+  console.log(`The ID sent from the frontend:`);
+  console.log(userId);
+  const user = await userStore.findOne({_id: userId});
+  response.body = user
+      ? {username: user.username}
+      : {error: "The user doesn't exist or it doesn't have a token saved in the local storage."};
+});
+
 router.put('/users/:id', async (ctx) => {
   const userId = ctx.params.id;
   const userDetails = ctx.request.body;

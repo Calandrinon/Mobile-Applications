@@ -4,6 +4,7 @@ import {UserProps} from "./UserProps";
 
 const usersUrl = `http://${baseUrl}/api/auth/users`;
 const logOffUrl = `http://${baseUrl}/api/auth/logoff`;
+const usernamesUrl = `http://${baseUrl}/api/auth/getUsernameById`;
 
 export const getUsers: (token: string) => Promise<UserProps[]> = token => {
     return withLogs(axios.get(usersUrl, authConfig(token)), 'getUsers');
@@ -24,3 +25,6 @@ export const getUserId: (username: string, token: string) => Promise<any> = (use
     return withLogs(axios.post(usersUrl, {username: username}, authConfig(token)), 'getUserId');
 }
 
+export const getUsernameById: (userId: string, token: string) => Promise<any> = (userId, token) => {
+    return withLogs(axios.post(usernamesUrl, {userId: userId}, authConfig(token)), 'getUsernameById');
+}
