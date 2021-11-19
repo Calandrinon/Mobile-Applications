@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { RouteComponentProps } from 'react-router';
 import {
+  IonButton,
   IonCol,
   IonContent,
   IonFab,
@@ -17,12 +18,15 @@ import Item from './Item';
 import { getLogger } from '../core';
 import { ItemContext } from './ItemProvider';
 import {useAppState} from "../statusHooks/useAppState";
+import {AuthContext} from "../auth";
 
 const log = getLogger('ItemList');
 
 const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
   const { items, fetching, fetchingError } = useContext(ItemContext);
   const { appState } = useAppState();
+  const {logout} = useContext(AuthContext);
+
   console.log("Current app state:");
   console.log(appState);
   log('render');
@@ -31,6 +35,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
       <IonHeader>
         <IonToolbar color="success">
           <IonTitle>Tasks</IonTitle>
+          <IonButton slot="end" color="medium" onClick={() => logout?.()}>Log off</IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent>
