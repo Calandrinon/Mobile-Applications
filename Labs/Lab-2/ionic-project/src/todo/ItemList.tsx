@@ -16,13 +16,15 @@ import { add } from 'ionicons/icons';
 import Item from './Item';
 import { getLogger } from '../core';
 import { ItemContext } from './ItemProvider';
+import {useAppState} from "../statusHooks/useAppState";
 
 const log = getLogger('ItemList');
 
 const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
   const { items, fetching, fetchingError } = useContext(ItemContext);
-  console.log(`Items: ${JSON.stringify(items)}`);
-  console.log(items);
+  const { appState } = useAppState();
+  console.log("Current app state:");
+  console.log(appState);
   log('render');
   return (
     <IonPage>

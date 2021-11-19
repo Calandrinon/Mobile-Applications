@@ -1,5 +1,5 @@
 # Worktrix
-A place where work addicts can socialize. Share your Eisenhower matrix with everyone else. (a project initially conceived as a side-project some months ago)
+A place where work addicts can socialize. Share your Eisenhower matrix with everyone else.
 
 ## Features
 

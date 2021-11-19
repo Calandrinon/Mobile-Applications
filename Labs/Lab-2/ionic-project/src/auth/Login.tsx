@@ -44,6 +44,19 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
               status: true
           });
       })();
+
+      window.addEventListener("beforeunload", (event) => {
+          (async () => {
+              let userId: any = await getUserId(String(username), token);
+              await updateUser(token, {
+                  _id: userId.id,
+                  username: String(username),
+                  password: String(password),
+                  status: false
+              });
+          })();
+          return event.returnValue = 'Are you sure you want to close?';
+      });
     return <Redirect to={{ pathname: '/' }} />
   }
   return (

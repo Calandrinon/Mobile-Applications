@@ -65,3 +65,13 @@ router.put('/users/:id', async (ctx) => {
   console.log("Update completed.");
   ctx.response.status = 200;
 });
+
+router.post('/logoff', async (ctx) => {
+  const requestBody = ctx.request.body;
+  console.log("The user ID is:");
+  console.log(requestBody.id);
+  const user = await userStore.findOne({_id: requestBody.id});
+  user.status = false;
+  await userStore.update({_id: requestBody.id}, user);
+  ctx.response.status = 200;
+});

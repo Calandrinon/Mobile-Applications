@@ -14,18 +14,34 @@ import {
 } from '@ionic/react';
 import User from './User';
 import { getLogger } from '../core';
-import { getUsers } from './userApi';
+import {getUserId, getUsers, logOff} from './userApi';
 import {AuthContext} from "../auth";
 import {UserProps} from "./UserProps";
+import {useAppState} from "../statusHooks/useAppState";
+import { updateUser } from "./userApi";
+import {Storage} from "@capacitor/core";
 
 const log = getLogger('UsersList');
 
+/**
+ * 1. Solve the local storage task for storing auth token and user ID
+ * 2. Solve the user status task
+ * **/
+
 const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
-    const { token } = useContext(AuthContext);
+    const { token, username, password } = useContext(AuthContext);
     const dummyUserPropsArray: UserProps[] = []
     const [users, setUsers] = useState(dummyUserPropsArray);
-    //let users = getUsers(token).then(result => result);
+    const { appState } = useAppState();
+
     useEffect(() => {
+        window.addEventListener('beforeunload', (event) => {
+            (async () => {
+                console.log(`Username, password and token: ${username}; ${password}; ${token}`);
+                let userId: any = await getUserId(String(username), token);
+                await logOff(token, userId);
+            })();
+        });
         const fetchUsers = async () => {
             const response = await getUsers(token);
             console.log("THIS IS THE RESPONSE CONTAINING THE USERS:");
@@ -34,9 +50,11 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
         };
         fetchUsers();
     }, []);
+
     console.log("These are the users:");
     console.log(users);
     log('render');
+
     return (
         <IonPage>
             <IonHeader>
@@ -48,8 +66,8 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
                 <h1>Users list component</h1>
                 {users && (
                     <IonList>
-                        { users && users.map(({ _id, username}) =>
-                            <User key={_id} _id={_id} username={username}/>)}
+                        { users && users.map(({ _id, username, password, status}) =>
+                            <User key={_id} _id={_id} username={username} password="" status={status}/>)}
                     </IonList>
                 )}
             </IonContent>
