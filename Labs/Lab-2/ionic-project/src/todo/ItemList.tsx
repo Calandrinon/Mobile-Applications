@@ -19,6 +19,8 @@ import { getLogger } from '../core';
 import { ItemContext } from './ItemProvider';
 import {useAppState} from "../statusHooks/useAppState";
 import {AuthContext} from "../auth";
+import {Storage} from "@capacitor/core";
+import {updateUserStatus} from "./userApi";
 
 const log = getLogger('ItemList');
 
@@ -35,7 +37,12 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
       <IonHeader>
         <IonToolbar color="success">
           <IonTitle>Tasks</IonTitle>
-          <IonButton slot="end" color="medium" onClick={() => logout?.()}>Log off</IonButton>
+          <IonButton slot="end" color="medium" onClick={async () => {
+            let userId = await Storage.get({key: "userId"});
+            let token = await Storage.get({key: "token"});
+            await updateUserStatus(userId.value, token.value, false);
+            logout?.();
+          }}>Log off</IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent>

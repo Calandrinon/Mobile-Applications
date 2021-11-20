@@ -87,3 +87,21 @@ router.post('/logoff', async (ctx) => {
   await userStore.update({_id: requestBody.id}, user);
   ctx.response.status = 200;
 });
+
+router.post('/updateUserStatus', async (ctx) => {
+  const request = ctx.request;
+  const response = ctx.response;
+  const userId = request.body.userId;
+
+  console.log(`The ID sent from the frontend:`);
+  console.log(userId);
+
+  const user = await userStore.findOne({_id: userId});
+  user.status = request.body.status;
+
+  await userStore.update({_id: userId}, user);
+  console.log("User status update completed.");
+
+  response.status = 200;
+  response.body = user;
+});
