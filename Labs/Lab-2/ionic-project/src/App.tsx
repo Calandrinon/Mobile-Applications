@@ -24,7 +24,8 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { ItemProvider } from './todo/ItemProvider';
 import {AuthContext, AuthProvider, Login, PrivateRoute} from './auth';
-import {call, ellipse, person, pricetagsOutline, settings, triangle} from "ionicons/icons";
+import {call, ellipse, libraryOutline, person, pricetagsOutline, settings, triangle} from "ionicons/icons";
+import {Quotes} from "./quotes/Quotes";
 
 const App: React.FC = () => {
     return (
@@ -39,15 +40,19 @@ const App: React.FC = () => {
                                 <PrivateRoute path="/item" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/item/:id" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/users" component={UsersList} exact={true}/>
+                                <PrivateRoute path="/quotes" component={Quotes} exact={true}/>
                             </ItemProvider>
                             <Route exact path="/" render={() => <Redirect to="/items"/>}/>
                         </IonRouterOutlet>
                         <IonTabBar slot="bottom" color="success">
                             <IonTabButton tab="itemsTab" href="/items">
-                                <IonIcon icon={pricetagsOutline} />
+                                <IonIcon icon={pricetagsOutline} /> Tasks
                             </IonTabButton>
                             <IonTabButton tab="usersTab" href="/users">
-                                <IonIcon icon={person} />
+                                <IonIcon icon={person} /> Users
+                            </IonTabButton>
+                            <IonTabButton tab="quotesTab" href="/quotes">
+                                <IonIcon icon={libraryOutline} /> Quotes
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>
