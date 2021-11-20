@@ -24,8 +24,18 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { ItemProvider } from './todo/ItemProvider';
 import {AuthContext, AuthProvider, Login, PrivateRoute} from './auth';
-import {call, ellipse, libraryOutline, person, pricetagsOutline, settings, triangle} from "ionicons/icons";
+import {
+    beakerOutline,
+    call,
+    ellipse,
+    libraryOutline,
+    person,
+    pricetagsOutline,
+    settings,
+    triangle
+} from "ionicons/icons";
 import {Quotes} from "./quotes/Quotes";
+import {QuotesFilter} from "./quotes/QuotesFilter";
 
 const App: React.FC = () => {
     return (
@@ -41,6 +51,7 @@ const App: React.FC = () => {
                                 <PrivateRoute path="/item/:id" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/users" component={UsersList} exact={true}/>
                                 <PrivateRoute path="/quotes" component={Quotes} exact={true}/>
+                                <PrivateRoute path="/quotesByAuthor" component={QuotesFilter} exact={true}/>
                             </ItemProvider>
                             <Route exact path="/" render={() => <Redirect to="/items"/>}/>
                         </IonRouterOutlet>
@@ -53,6 +64,9 @@ const App: React.FC = () => {
                             </IonTabButton>
                             <IonTabButton tab="quotesTab" href="/quotes">
                                 <IonIcon icon={libraryOutline} /> Quotes
+                            </IonTabButton>
+                            <IonTabButton tab="quotesFilteringTab" href="/quotesByAuthor">
+                                <IonIcon icon={beakerOutline} /> Filter quotes by author
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>
