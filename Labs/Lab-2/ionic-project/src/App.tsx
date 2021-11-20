@@ -30,12 +30,13 @@ import {
     ellipse,
     libraryOutline,
     person,
-    pricetagsOutline,
+    pricetagsOutline, searchOutline,
     settings,
     triangle
 } from "ionicons/icons";
 import {Quotes} from "./quotes/Quotes";
 import {QuotesFilter} from "./quotes/QuotesFilter";
+import {QuotesSearch} from "./quotes/QuotesSearch";
 
 const App: React.FC = () => {
     return (
@@ -51,7 +52,8 @@ const App: React.FC = () => {
                                 <PrivateRoute path="/item/:id" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/users" component={UsersList} exact={true}/>
                                 <PrivateRoute path="/quotes" component={Quotes} exact={true}/>
-                                <PrivateRoute path="/quotesByAuthor" component={QuotesFilter} exact={true}/>
+                                <PrivateRoute path="/filterQuotesByAuthor" component={QuotesFilter} exact={true}/>
+                                <PrivateRoute path="/searchQuotesByAuthor" component={QuotesSearch} exact={true}/>
                             </ItemProvider>
                             <Route exact path="/" render={() => <Redirect to="/items"/>}/>
                         </IonRouterOutlet>
@@ -65,8 +67,11 @@ const App: React.FC = () => {
                             <IonTabButton tab="quotesTab" href="/quotes">
                                 <IonIcon icon={libraryOutline} /> Quotes
                             </IonTabButton>
-                            <IonTabButton tab="quotesFilteringTab" href="/quotesByAuthor">
+                            <IonTabButton tab="quotesFilteringTab" href="/filterQuotesByAuthor">
                                 <IonIcon icon={beakerOutline} /> Filter quotes by author
+                            </IonTabButton>
+                            <IonTabButton tab="quotesSearchingTab" href="/searchQuotesByAuthor">
+                                <IonIcon icon={searchOutline}/> Search quotes by author
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>
