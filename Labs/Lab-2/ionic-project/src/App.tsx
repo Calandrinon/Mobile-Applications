@@ -68,10 +68,10 @@ const App: React.FC = () => {
                                 <IonIcon icon={libraryOutline} /> Quotes
                             </IonTabButton>
                             <IonTabButton tab="quotesFilteringTab" href="/filterQuotesByAuthor">
-                                <IonIcon icon={beakerOutline} /> Filter quotes by author
+                                <IonIcon icon={beakerOutline} /> Filter quotes
                             </IonTabButton>
                             <IonTabButton tab="quotesSearchingTab" href="/searchQuotesByAuthor">
-                                <IonIcon icon={searchOutline}/> Search quotes by author
+                                <IonIcon icon={searchOutline}/> Search quotes
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>

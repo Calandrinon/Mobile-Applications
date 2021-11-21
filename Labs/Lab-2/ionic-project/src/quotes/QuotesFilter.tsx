@@ -22,6 +22,7 @@ import {
     IonSelectOption
 } from '@ionic/react';
 import { getLogger } from '../core';
+import {useNetwork} from "../statusHooks/useNetwork";
 
 const log = getLogger('Login');
 
@@ -30,6 +31,7 @@ export const QuotesFilter: React.FC<RouteComponentProps> = ({ history }) => {
     const [items, setItems] = useState<string[]>([]);
     const [filter, setFilter] = useState<string | undefined>(undefined);
     const [disableInfiniteScroll, setDisableInfiniteScroll] = useState<boolean>(false);
+    const networkStatus = useNetwork();
 
     async function fetchAuthors() {
         const url: string = 'https://type.fit/api/quotes';
@@ -76,6 +78,7 @@ export const QuotesFilter: React.FC<RouteComponentProps> = ({ history }) => {
             <IonHeader>
                 <IonToolbar color="success">
                     <IonTitle>Tab Two</IonTitle>
+                    <h3 slot="end">{networkStatus.networkStatus.connected ? "Online" : "Offline"}</h3>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
@@ -85,6 +88,9 @@ export const QuotesFilter: React.FC<RouteComponentProps> = ({ history }) => {
                 }}>
                     {authors.map(author => <IonSelectOption key={author} value={author}>{author}</IonSelectOption>)}
                 </IonSelect>
+                {!networkStatus.networkStatus.connected &&
+                <h3>Your connection is down. The quotes cannot be displayed.</h3>
+                }
                 {items.map((item: any, i: number) => {
                     const quoteDivStyle = {
                         fontSize: 'large'

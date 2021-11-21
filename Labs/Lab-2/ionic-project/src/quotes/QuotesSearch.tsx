@@ -22,12 +22,14 @@ import {
     IonSelectOption, IonSearchbar, IonList, IonItem
 } from '@ionic/react';
 import { getLogger } from '../core';
+import {useNetwork} from "../statusHooks/useNetwork";
 
 const log = getLogger('Login');
 
 export const QuotesSearch: React.FC<RouteComponentProps> = ({ history }) => {
     const [authors, setAuthors] = useState<string[]>([]);
     const [searchAuthor, setSearchAuthor] = useState<string>('');
+    const networkStatus = useNetwork();
 
     async function fetchAuthors() {
         const url: string = 'https://type.fit/api/quotes';
@@ -53,6 +55,7 @@ export const QuotesSearch: React.FC<RouteComponentProps> = ({ history }) => {
             <IonHeader>
                 <IonToolbar color="success">
                     <IonTitle>Search authors</IonTitle>
+                    <h3 slot="end">{networkStatus.networkStatus.connected ? "Online" : "Offline"}</h3>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -61,6 +64,9 @@ export const QuotesSearch: React.FC<RouteComponentProps> = ({ history }) => {
                     debounce={1000}
                     onIonChange={e => setSearchAuthor(e.detail.value!)}>
                 </IonSearchbar>
+                {!networkStatus.networkStatus.connected &&
+                <h3>Your connection is down. The quotes cannot be displayed.</h3>
+                }
                 <IonList>
                     {authors
                         .filter((author: string) => !!author && author.indexOf(searchAuthor) >= 0)
