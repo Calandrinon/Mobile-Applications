@@ -4,6 +4,7 @@ import { getLogger } from '../core';
 import { ItemProps } from './ItemProps';
 import { createItem, getItems, newWebSocket, updateItem } from './itemApi';
 import { AuthContext } from '../auth';
+import {Storage} from "@capacitor/core";
 
 const log = getLogger('ItemProvider');
 
@@ -97,8 +98,15 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
       }
       try {
         log('fetchItems started');
-        dispatch({ type: FETCH_ITEMS_STARTED });
-        const items = await getItems(token);
+        let items;
+        if (navigator.onLine) {
+          dispatch({ type: FETCH_ITEMS_STARTED });
+          items = await getItems(token);
+          await Storage.set({key: "savedTasks", value: JSON.stringify(items)});
+        } else {
+          items = await Storage.get({key: "savedTasks"});
+          items = JSON.parse(items.value);
+        }
         log('fetchItems succeeded');
         if (!canceled) {
           dispatch({ type: FETCH_ITEMS_SUCCEEDED, payload: { items } });
