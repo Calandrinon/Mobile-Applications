@@ -21,6 +21,7 @@ import {useAppState} from "../statusHooks/useAppState";
 import {AuthContext} from "../auth";
 import {Storage} from "@capacitor/core";
 import {updateUserStatus} from "./userApi";
+import {useNetwork} from "../statusHooks/useNetwork";
 
 const log = getLogger('ItemList');
 
@@ -28,6 +29,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
   const { items, fetching, fetchingError } = useContext(ItemContext);
   const { appState } = useAppState();
   const {logout} = useContext(AuthContext);
+  let networkStatus = useNetwork();
 
   console.log("Current app state:");
   console.log(appState);
@@ -36,7 +38,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar color="success">
-          <IonTitle>Tasks</IonTitle>
+          <IonTitle>Tasks - {networkStatus.networkStatus.connected ? "Online" : "Offline"}</IonTitle>
           <IonButton slot="end" color="medium" onClick={async () => {
             let userId = await Storage.get({key: "userId"});
             let token = await Storage.get({key: "token"});

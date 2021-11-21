@@ -4,7 +4,8 @@ import { getLogger } from '../core';
 import { ItemProps } from './ItemProps';
 import { createItem, getItems, newWebSocket, updateItem } from './itemApi';
 import { AuthContext } from '../auth';
-import {Storage} from "@capacitor/core";
+import {Network, Storage} from "@capacitor/core";
+import {useNetwork} from "../statusHooks/useNetwork";
 
 const log = getLogger('ItemProvider');
 
@@ -74,6 +75,14 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
   const { token } = useContext(AuthContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   const { items, fetching, fetchingError, saving, savingError } = state;
+  Network.addListener('networkStatusChange', async (status) => {
+    if (navigator.onLine) {
+      let localStorageItems = JSON.parse((await Storage.get({key: "savedTasks"})).value);
+
+      console.log("NETWORK STATUS CHANGE EFFECT");
+      console.log(localStorageItems);
+    }
+  });
   useEffect(getItemsEffect, [token]);
   useEffect(wsEffect, [token]);
   const saveItem = useCallback<SaveItemFn>(saveItemCallback, [token]);
@@ -85,6 +94,13 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
     </ItemContext.Provider>
   );
 
+  /**
+    if (navigator.onLine) {
+      let localStorageItems = JSON.parse((await Storage.get({key: "savedTasks"})).value);
+      console.log("NETWORK STATUS CHANGE EFFECT");
+      console.log(localStorageItems);
+    }
+**/
   function getItemsEffect() {
     let canceled = false;
     fetchItems();
@@ -122,9 +138,18 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
     try {
       log('saveItem started');
       dispatch({ type: SAVE_ITEM_STARTED });
-      const savedItem = await (item._id ? updateItem(token, item) : createItem(token, item));
-      log('saveItem succeeded');
+      let savedItem;
+      if (navigator.onLine) {
+        savedItem = await (item._id ? updateItem(token, item) : createItem(token, item));
+      } else {
+        let userId = await Storage.get({key: "userId"});
+        savedItem = {...item, userId: userId.value};
+        let savedTasks = JSON.parse((await Storage.get({key: "savedTasks"})).value);
+        savedTasks.push(savedItem);
+        await Storage.set({key: "savedTasks", value: JSON.stringify(savedTasks)});
+      }
       dispatch({ type: SAVE_ITEM_SUCCEEDED, payload: { item: savedItem } });
+      log('saveItem succeeded');
     } catch (error) {
       log('saveItem failed');
       dispatch({ type: SAVE_ITEM_FAILED, payload: { error } });
