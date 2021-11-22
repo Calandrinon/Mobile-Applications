@@ -29,7 +29,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const [text, setText] = useState('');
   const [category, setCategory] = useState('');
   const [item, setItem] = useState<ItemProps>();
-  const { photos, takePhoto, deletePhoto } = usePhotoGallery();
+  const { photos, takePhoto, deletePhoto, getSavedPhoto } = usePhotoGallery();
   const [photoToDelete, setPhotoToDelete] = useState<Photo>();
 
   useEffect(() => {

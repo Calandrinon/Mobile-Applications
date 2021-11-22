@@ -1,8 +1,8 @@
-import { useCamera } from '@ionic/react-hooks/camera';
-import { CameraPhoto, CameraResultType, CameraSource, FilesystemDirectory } from '@capacitor/core';
-import { useEffect, useState } from 'react';
-import { base64FromPath, useFilesystem } from '@ionic/react-hooks/filesystem';
-import { useStorage } from '@ionic/react-hooks/storage';
+import {useCamera} from '@ionic/react-hooks/camera';
+import {CameraPhoto, CameraResultType, CameraSource, FileReadResult, FilesystemDirectory} from '@capacitor/core';
+import {useEffect, useState} from 'react';
+import {base64FromPath, useFilesystem} from '@ionic/react-hooks/filesystem';
+import {useStorage} from '@ionic/react-hooks/storage';
 
 export interface Photo {
     filepath: string;
@@ -43,6 +43,30 @@ export function usePhotoGallery() {
         };
     };
 
+    const getSavedPhoto = async (filename: string): Promise<(FileReadResult | null)> => {
+        const photosString = await get(PHOTO_STORAGE);
+        const photos = (photosString ? JSON.parse(photosString) : []) as Photo[];
+        let resultToReturn: FileReadResult;
+
+        for (let photo of photos) {
+            if (photo.filepath === filename) {
+                //photo.webviewPath = `data:image/jpeg;base64,${file.data}`;
+                readFile({
+                    path: photo.filepath,
+                    directory: FilesystemDirectory.Data
+                }).then((result) => {
+                    resultToReturn = result;
+                })
+                break;
+            }
+        }
+
+        // @ts-ignore
+        if (resultToReturn === undefined)
+            return null;
+        return resultToReturn;
+    };
+
     const { get, set } = useStorage();
     useEffect(() => {
         const loadSaved = async () => {
@@ -75,5 +99,6 @@ export function usePhotoGallery() {
         photos,
         takePhoto,
         deletePhoto,
+        getSavedPhoto
     };
 }
