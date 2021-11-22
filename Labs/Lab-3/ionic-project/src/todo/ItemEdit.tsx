@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  IonActionSheet,
   IonButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
+  IonButtons, IonCol,
+  IonContent, IonFab, IonFabButton, IonGrid,
+  IonHeader, IonIcon, IonImg,
   IonInput,
   IonLoading,
-  IonPage, IonSelect, IonSelectOption,
+  IonPage, IonRow, IonSelect, IonSelectOption,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
@@ -14,6 +15,8 @@ import { getLogger } from '../core';
 import { ItemContext } from './ItemProvider';
 import { RouteComponentProps } from 'react-router';
 import { ItemProps } from './ItemProps';
+import {Photo, usePhotoGallery} from "../mediaContentHooks/usePhotoGallery";
+import {camera, closeOutline, trash} from "ionicons/icons";
 
 const log = getLogger('ItemEdit');
 
@@ -26,6 +29,9 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const [text, setText] = useState('');
   const [category, setCategory] = useState('');
   const [item, setItem] = useState<ItemProps>();
+  const { photos, takePhoto, deletePhoto } = usePhotoGallery();
+  const [photoToDelete, setPhotoToDelete] = useState<Photo>();
+
   useEffect(() => {
     log('useEffect');
     const routeId = match.params.id || '';
@@ -35,12 +41,15 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
       setText(item.text);
     }
   }, [match.params.id, items]);
+
   const handleSave = () => {
     const editedItem = { ...item, text, category};
     console.log(editedItem);
     saveItem && saveItem(editedItem).then(() => history.goBack());
   };
+
   log('render');
+
   return (
     <IonPage>
       <IonHeader>
@@ -65,6 +74,40 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
         {savingError && (
           <div>{savingError.message || 'Failed to save item'}</div>
         )}
+          <IonGrid>
+              <IonRow>
+                  {photos.map((photo, index) => (
+                      <IonCol size="6" key={index}>
+                          <IonImg onClick={() => setPhotoToDelete(photo)}
+                                  src={photo.webviewPath}/>
+                      </IonCol>
+                  ))}
+              </IonRow>
+          </IonGrid>
+          <IonFab vertical="bottom" horizontal="center" slot="fixed">
+              <IonFabButton onClick={() => takePhoto()} color="success">
+                  <IonIcon icon={camera}/>
+              </IonFabButton>
+          </IonFab>
+          <IonActionSheet
+              isOpen={!!photoToDelete}
+              buttons={[{
+                  text: 'Delete',
+                  role: 'destructive',
+                  icon: trash,
+                  handler: () => {
+                      if (photoToDelete) {
+                          deletePhoto(photoToDelete);
+                          setPhotoToDelete(undefined);
+                      }
+                  }
+              }, {
+                  text: 'Cancel',
+                  icon: closeOutline,
+                  role: 'cancel'
+              }]}
+              onDidDismiss={() => setPhotoToDelete(undefined)}
+          />
       </IonContent>
     </IonPage>
   );
