@@ -1,0 +1,7 @@
+{
+  "name": "ionicLocationMap",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

@@ -1,6 +1,11 @@
-{"text":"delete1","category":"Delete","userId":"vI1GMkzBza5i82zj","_id":"JZJvw2n7pEHGpOJF"}
 {"text":"decide1","category":"Decide","userId":"vI1GMkzBza5i82zj","_id":"VU1CP8F4nCg3DuWL"}
-{"text":"do1","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"iKhWF3O9J3oEmNBO"}
 {"text":"decide3","category":"Decide","userId":"vI1GMkzBza5i82zj","_id":"nMcp7oO1sWDIQOdb"}
-{"$$deleted":true,"_id":"iKhWF3O9J3oEmNBO"}
-{"$$deleted":true,"_id":"JZJvw2n7pEHGpOJF"}
+{"text":"do1","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"ojtm7TUn4N59LczF"}
+{"$$deleted":true,"_id":"ojtm7TUn4N59LczF"}
+{"text":"do1","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"CJhZetH7VDK4UGAI"}
+{"text":"delegate1","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"UwU9sB2uAVEwHm0Y"}
+{"text":"delete1","category":"Delete","userId":"vI1GMkzBza5i82zj","_id":"qaMgS3ntMw9vHnzI"}
+{"text":"some task","category":"Do","userId":"vI1GMkzBza5i82zz","_id":"ztyb0rmxAkhUGVrj"}
+{"text":"decide1","category":"Decide","userId":"vI1GMkzBza5i82zz","_id":"mLpLFkppnwrydixs"}
+{"text":"some task","category":"Do","userId":"vI1GMkzBza5i82zz","_id":"ztyb0rmxAkhUGVrj"}
+{"text":"decide2","category":"Decide","userId":"vI1GMkzBza5i82zz","_id":"KSLqKA1wNww0DrZ5"}
