@@ -3,6 +3,7 @@ import { authConfig, baseUrl, getLogger, withLogs } from '../core';
 import { ItemProps } from './ItemProps';
 
 const itemUrl = `http://${baseUrl}/api/item`;
+const synchronizationUrl = itemUrl + '/synchronize';
 
 export const getItems: (token: string) => Promise<ItemProps[]> = token => {
   return withLogs(axios.get(itemUrl, authConfig(token)), 'getItems');
@@ -14,6 +15,10 @@ export const createItem: (token: string, item: ItemProps) => Promise<ItemProps[]
 
 export const updateItem: (token: string, item: ItemProps) => Promise<ItemProps[]> = (token, item) => {
   return withLogs(axios.put(`${itemUrl}/${item._id}`, item, authConfig(token)), 'updateItem');
+}
+
+export const sendNewOfflineDataToServer: (token: string, items: ItemProps[]) => Promise<ItemProps[]> = (token, items) => {
+  return withLogs(axios.post(synchronizationUrl, items, authConfig(token)), 'sendNewOfflineDataToServer');
 }
 
 interface MessageData {

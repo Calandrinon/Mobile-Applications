@@ -28,6 +28,12 @@ export class NoteStore {
   async remove(props) {
     return this.store.remove(props);
   }
+
+  async getAll(userId) {
+    return this.store.find({userId: userId}, (error, docs) => {
+      return error ? error : docs;
+    });
+  }
 }
 
 export default new NoteStore({ filename: './db/notes.json', autoload: true });

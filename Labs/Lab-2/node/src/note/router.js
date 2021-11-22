@@ -79,3 +79,24 @@ router.del('/:id', async (ctx) => {
     ctx.response.status = 204; // no content
   }
 });
+
+
+router.post('/synchronize', async (ctx) => {
+  const request = ctx.request;
+  const response = ctx.response;
+  console.log("ITEMS TO BE SYNCHRONIZED:");
+  console.log(request.body);
+  let offlineItems = request.body;
+  let currentlySavedItems = await noteStore.getAll(offlineItems[0].userId);
+
+  for (let item of offlineItems) {
+    if ("_id" in item) {
+      await noteStore.update({_id: item._id}, item);
+    } else {
+      await noteStore.insert(item);
+    }
+  }
+
+  response.body = await noteStore.getAll(offlineItems[0].userId);
+  response.status = 200;
+});

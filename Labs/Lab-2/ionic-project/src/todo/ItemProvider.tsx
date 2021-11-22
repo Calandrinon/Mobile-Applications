@@ -1,11 +1,12 @@
-import React, { useCallback, useContext, useEffect, useReducer } from 'react';
+import React, {useCallback, useContext, useEffect, useReducer, useState} from 'react';
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
 import { ItemProps } from './ItemProps';
-import { createItem, getItems, newWebSocket, updateItem } from './itemApi';
+import {createItem, getItems, newWebSocket, sendNewOfflineDataToServer, updateItem} from './itemApi';
 import { AuthContext } from '../auth';
 import {Network, Storage} from "@capacitor/core";
 import {useNetwork} from "../statusHooks/useNetwork";
+import {useAppState} from "../statusHooks/useAppState";
 
 const log = getLogger('ItemProvider');
 
@@ -75,32 +76,36 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
   const { token } = useContext(AuthContext);
   const [state, dispatch] = useReducer(reducer, initialState);
   const { items, fetching, fetchingError, saving, savingError } = state;
-  Network.addListener('networkStatusChange', async (status) => {
-    if (navigator.onLine) {
-      let localStorageItems = JSON.parse((await Storage.get({key: "savedTasks"})).value);
 
-      console.log("NETWORK STATUS CHANGE EFFECT");
-      console.log(localStorageItems);
-    }
-  });
+  useEffect(() => {
+    Network.addListener('networkStatusChange', async (status) => {
+      if (status.connected) {
+        let localStorageItems = JSON.parse((await Storage.get({key: "savedTasks"})).value);
+        console.log("NETWORK STATUS CHANGE EFFECT");
+        console.log(localStorageItems);
+        let response = await sendNewOfflineDataToServer(token, localStorageItems);
+        console.log("SERVER RESPONSE WITH UPDATED DATA:");
+        console.log(response);
+      } else {
+        alert("Your internet connection is off. All items created are saved in the local storage and synchronized when the connection is restored.");
+      }
+    });
+  }, []);
+
   useEffect(getItemsEffect, [token]);
   useEffect(wsEffect, [token]);
   const saveItem = useCallback<SaveItemFn>(saveItemCallback, [token]);
   const value = { items, fetching, fetchingError, saving, savingError, saveItem };
+
   log('returns');
+
   return (
     <ItemContext.Provider value={value}>
       {children}
     </ItemContext.Provider>
   );
 
-  /**
-    if (navigator.onLine) {
-      let localStorageItems = JSON.parse((await Storage.get({key: "savedTasks"})).value);
-      console.log("NETWORK STATUS CHANGE EFFECT");
-      console.log(localStorageItems);
-    }
-**/
+
   function getItemsEffect() {
     let canceled = false;
     fetchItems();

@@ -77,7 +77,7 @@ export const QuotesFilter: React.FC<RouteComponentProps> = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar color="success">
-                    <IonTitle>Tab Two</IonTitle>
+                    <IonTitle>Filter quotes</IonTitle>
                     <h3 slot="end">{networkStatus.networkStatus.connected ? "Online" : "Offline"}</h3>
                 </IonToolbar>
             </IonHeader>
