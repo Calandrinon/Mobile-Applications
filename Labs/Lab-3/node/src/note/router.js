@@ -30,6 +30,8 @@ router.get('/:id', async (ctx) => {
 const createNote = async (ctx, note, response) => {
   try {
     const userId = ctx.state.user._id;
+    console.log("USER ID:");
+    console.log(userId);
     note.userId = userId;
     response.body = await noteStore.insert(note);
     response.status = 201; // created

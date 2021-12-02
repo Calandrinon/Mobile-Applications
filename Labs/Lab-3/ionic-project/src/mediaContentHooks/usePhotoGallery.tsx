@@ -1,10 +1,20 @@
 import {useCamera} from '@ionic/react-hooks/camera';
-import {CameraPhoto, CameraResultType, CameraSource, FileReadResult, FilesystemDirectory} from '@capacitor/core';
+import {
+    CameraPhoto,
+    CameraResultType,
+    CameraSource,
+    FileReadResult,
+    FilesystemDirectory,
+    Plugins
+} from '@capacitor/core';
 import {useEffect, useState} from 'react';
 import {base64FromPath, useFilesystem} from '@ionic/react-hooks/filesystem';
 import {useStorage} from '@ionic/react-hooks/storage';
+import {Storage} from "@capacitor/core";
 
 export interface Photo {
+    userId: string;
+    itemId: string | undefined;
     filepath: string;
     webviewPath?: string;
 }
@@ -15,21 +25,21 @@ export function usePhotoGallery() {
     const { getPhoto } = useCamera();
     const [photos, setPhotos] = useState<Photo[]>([]);
 
-    const takePhoto = async () => {
+    const takePhoto = async (itemId: string | undefined) => {
         const cameraPhoto = await getPhoto({
             resultType: CameraResultType.Uri,
             source: CameraSource.Camera,
             quality: 100
         });
         const fileName = new Date().getTime() + '.jpeg';
-        const savedFileImage = await savePicture(cameraPhoto, fileName);
+        const savedFileImage = await savePicture(cameraPhoto, fileName, itemId);
         const newPhotos = [savedFileImage, ...photos];
         setPhotos(newPhotos);
-        set(PHOTO_STORAGE, JSON.stringify(newPhotos));
+        await set(PHOTO_STORAGE, JSON.stringify(newPhotos));
     };
 
     const { deleteFile, readFile, writeFile } = useFilesystem();
-    const savePicture = async (photo: CameraPhoto, fileName: string): Promise<Photo> => {
+    const savePicture = async (photo: CameraPhoto, fileName: string, itemId: string | undefined): Promise<Photo> => {
         const base64Data = await base64FromPath(photo.webPath!);
         await writeFile({
             path: fileName,
@@ -37,7 +47,11 @@ export function usePhotoGallery() {
             directory: FilesystemDirectory.Data
         });
 
+        let userId = await Storage.get({key: "userId"});
+
         return {
+            userId: userId.value,
+            itemId: itemId,
             filepath: fileName,
             webviewPath: photo.webPath
         };

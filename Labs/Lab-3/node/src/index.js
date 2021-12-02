@@ -6,6 +6,7 @@ import bodyParser from "koa-bodyparser";
 import { timingLogger, exceptionHandler, jwtConfig, initWss, broadcast, verifyClient } from './utils';
 import { router as noteRouter} from './note';
 import { router as authRouter } from './auth';
+import { router as photoRouter } from './photos';
 import jwt from 'koa-jwt';
 import cors from '@koa/cors';
 import noteStore from "./note/store";
@@ -27,7 +28,8 @@ let categories = ['Do', 'Decide', 'Delegate', 'Delete'];
 // public
 const publicApiRouter = new Router({ prefix });
 publicApiRouter
-  .use('/auth', authRouter.routes());
+  .use('/auth', authRouter.routes())
+  .use('/photo', photoRouter.routes());
 app
   .use(publicApiRouter.routes())
   .use(publicApiRouter.allowedMethods());

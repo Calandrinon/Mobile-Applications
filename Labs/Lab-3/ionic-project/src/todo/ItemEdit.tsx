@@ -17,6 +17,9 @@ import { RouteComponentProps } from 'react-router';
 import { ItemProps } from './ItemProps';
 import {Photo, usePhotoGallery} from "../mediaContentHooks/usePhotoGallery";
 import {camera, closeOutline, trash} from "ionicons/icons";
+import {createPhoto} from "../photos/photoApi";
+import {AuthContext} from "../auth";
+import {Storage} from "@capacitor/core";
 
 const log = getLogger('ItemEdit');
 
@@ -26,16 +29,25 @@ interface ItemEditProps extends RouteComponentProps<{
 
 const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const { items, saving, savingError, saveItem } = useContext(ItemContext);
+  const {token} = useContext(AuthContext);
   const [text, setText] = useState('');
   const [category, setCategory] = useState('');
   const [item, setItem] = useState<ItemProps>();
   const { photos, takePhoto, deletePhoto, getSavedPhoto } = usePhotoGallery();
   const [photoToDelete, setPhotoToDelete] = useState<Photo>();
+  let userId: string;
 
   useEffect(() => {
+      (async () => {
+          userId = (await Storage.get({key: "userId"})).value;
+      })();
+  }, []);
+
+    useEffect( () => {
     log('useEffect');
     const routeId = match.params.id || '';
     const item = items?.find(it => it._id === routeId);
+
     setItem(item);
     if (item) {
       setText(item.text);
@@ -76,7 +88,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
         )}
           <IonGrid>
               <IonRow>
-                  {photos.map((photo, index) => (
+                  {photos.filter((photo) => item?._id == photo.itemId).map((photo, index) => (
                       <IonCol size="6" key={index}>
                           <IonImg onClick={() => setPhotoToDelete(photo)}
                                   src={photo.webviewPath}/>
@@ -85,7 +97,16 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
               </IonRow>
           </IonGrid>
           <IonFab vertical="bottom" horizontal="center" slot="fixed">
-              <IonFabButton onClick={() => takePhoto()} color="success">
+              <IonFabButton onClick={() => {
+                  takePhoto(item?._id);
+                  Storage.get({key: "photos"}).then((photosJson) => {
+                      let photos = JSON.parse(photosJson.value);
+                      if (!!photos) {
+                          let lastPhoto = photos.at(-1);
+                          createPhoto(token, lastPhoto);
+                      }
+                  });
+              }} color="success">
                   <IonIcon icon={camera}/>
               </IonFabButton>
           </IonFab>
