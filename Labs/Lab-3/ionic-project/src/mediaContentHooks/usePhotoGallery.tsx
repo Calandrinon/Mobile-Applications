@@ -12,6 +12,7 @@ import {base64FromPath, useFilesystem} from '@ionic/react-hooks/filesystem';
 import {useStorage} from '@ionic/react-hooks/storage';
 import {Storage} from "@capacitor/core";
 
+
 export interface Photo {
     userId: string;
     itemId: string | undefined;
@@ -41,6 +42,7 @@ export function usePhotoGallery() {
     const { deleteFile, readFile, writeFile } = useFilesystem();
     const savePicture = async (photo: CameraPhoto, fileName: string, itemId: string | undefined): Promise<Photo> => {
         const base64Data = await base64FromPath(photo.webPath!);
+
         await writeFile({
             path: fileName,
             data: base64Data,

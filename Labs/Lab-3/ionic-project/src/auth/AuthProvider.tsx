@@ -66,7 +66,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   function logoutCallback(): void {
     log('logout');
     (async () => {
-      await Storage.clear();
+      await Storage.remove({key: "userId"});
+      await Storage.remove({key: "token"});
+      await Storage.remove({key: "savedTasks"});
     })();
     setState({
       ...state,
