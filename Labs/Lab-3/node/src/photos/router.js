@@ -12,7 +12,6 @@ const createPhotos = async (ctx, photos, response) => {
     console.log(savedPhotos);
     let newPhotos = photos.filter((photo) => photo.filepath );
     for (let photoIndex in photos) {
-
       console.log("Photo:");
       console.log(photos[photoIndex]);
       await photoStore.insert(photos[photoIndex]);

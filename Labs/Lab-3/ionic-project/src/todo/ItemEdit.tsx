@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  IonActionSheet,
-  IonButton,
-  IonButtons, IonCol,
-  IonContent, IonFab, IonFabButton, IonGrid,
-  IonHeader, IonIcon, IonImg,
-  IonInput,
-  IonLoading,
-  IonPage, IonRow, IonSelect, IonSelectOption,
-  IonTitle,
-  IonToolbar
+    IonActionSheet,
+    IonButton,
+    IonButtons, IonCol,
+    IonContent, IonFab, IonFabButton, IonGrid,
+    IonHeader, IonIcon, IonImg,
+    IonInput,
+    IonLoading, IonModal,
+    IonPage, IonRow, IonSelect, IonSelectOption,
+    IonTitle,
+    IonToolbar
 } from '@ionic/react';
 import { getLogger } from '../core';
 import { ItemContext } from './ItemProvider';
@@ -20,6 +20,8 @@ import {camera, closeOutline, trash} from "ionicons/icons";
 import {createPhotos} from "../photos/photoApi";
 import {AuthContext} from "../auth";
 import {Storage} from "@capacitor/core";
+import {useMyLocation} from "../location/useMyLocation";
+import {MyMap} from "../location/MyMap";
 
 const log = getLogger('ItemEdit');
 
@@ -28,6 +30,7 @@ interface ItemEditProps extends RouteComponentProps<{
 }> {}
 
 const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
+    const [showModal, setShowModal] = useState(false);
   const { items, saving, savingError, saveItem } = useContext(ItemContext);
   const {token} = useContext(AuthContext);
   const [text, setText] = useState('');
@@ -36,6 +39,8 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const { photos, takePhoto, deletePhoto, getSavedPhoto } = usePhotoGallery();
   const oldPhotos = JSON.parse(JSON.stringify(photos));
   const [photoToDelete, setPhotoToDelete] = useState<Photo>();
+  const myLocation = useMyLocation();
+  const { latitude: lat, longitude: lng } = myLocation.position?.coords || {}
   let userId: string;
 
   useEffect(() => {
@@ -90,8 +95,19 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
           <IonSelectOption value="Delegate">Delegate</IonSelectOption>
           <IonSelectOption value="Delete">Delete</IonSelectOption>
         </IonSelect>
-        <IonLoading isOpen={saving} />
-        {savingError && (
+          <IonModal isOpen={showModal} backdropDismiss={false} cssClass='my-custom-class'>
+              <MyMap
+                  lat={lat}
+                  lng={lng}
+                  onMapClick={log('onMap')}
+                  onMarkerClick={log('onMarker')}
+              />
+              <IonButton color="success" onClick={() => setShowModal(false)}>Close modal</IonButton>
+          </IonModal>
+          <IonButton color="success" onClick={() => setShowModal(true)}>Select location</IonButton>
+
+          <IonLoading isOpen={saving} />
+          {savingError && (
           <div>{savingError.message || 'Failed to save item'}</div>
         )}
           <IonGrid>
