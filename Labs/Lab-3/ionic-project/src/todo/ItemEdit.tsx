@@ -44,7 +44,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
       })();
   }, []);
 
-    useEffect( () => {
+  useEffect( () => {
     log('useEffect');
     const routeId = match.params.id || '';
     const item = items?.find(it => it._id === routeId);

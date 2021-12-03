@@ -37,7 +37,7 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
             </IonGrid>
             <IonButton color="success" onClick={() => setShowModal(false)}>Close modal</IonButton>
         </IonModal>
-        <IonButton color="success" onClick={() => setShowModal(true)}>Show task images</IonButton>
+        <IonButton color="success" onClick={() => setShowModal(true)}>Images</IonButton>
 
         <IonButton color="success" onClick={() => deleteItem(token, String(_id))}>
             <IonIcon slot="start" icon={trashOutline}/>
