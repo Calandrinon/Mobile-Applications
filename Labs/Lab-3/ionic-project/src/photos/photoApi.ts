@@ -9,8 +9,8 @@ export const getPhotos: (token: string) => Promise<PhotoProps[]> = token => {
     return withLogs(axios.get(photoUrl, authConfig(token)), 'getPhotos');
 }
 
-export const createPhoto: (token: string, photo: PhotoProps) => Promise<PhotoProps[]> = (token, photo) => {
-    return withLogs(axios.post(photoUrl, photo, authConfig(token)), 'createPhoto');
+export const createPhotos: (token: string, photos: PhotoProps[]) => Promise<PhotoProps[]> = (token, photos) => {
+    return withLogs(axios.post(photoUrl, photos, authConfig(token)), 'createPhoto');
 }
 
 export const updatePhoto: (token: string, photo: PhotoProps) => Promise<PhotoProps[]> = (token, photo) => {

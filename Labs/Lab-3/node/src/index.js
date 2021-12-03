@@ -19,7 +19,9 @@ initWss(wss);
 app.use(cors());
 app.use(timingLogger);
 app.use(exceptionHandler);
-app.use(bodyParser());
+app.use(bodyParser({
+    jsonLimit: "100mb"
+}));
 
 const prefix = '/api';
 

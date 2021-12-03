@@ -17,7 +17,7 @@ import { RouteComponentProps } from 'react-router';
 import { ItemProps } from './ItemProps';
 import {Photo, usePhotoGallery} from "../mediaContentHooks/usePhotoGallery";
 import {camera, closeOutline, trash} from "ionicons/icons";
-import {createPhoto} from "../photos/photoApi";
+import {createPhotos} from "../photos/photoApi";
 import {AuthContext} from "../auth";
 import {Storage} from "@capacitor/core";
 
@@ -34,6 +34,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const [category, setCategory] = useState('');
   const [item, setItem] = useState<ItemProps>();
   const { photos, takePhoto, deletePhoto, getSavedPhoto } = usePhotoGallery();
+  const oldPhotos = JSON.parse(JSON.stringify(photos));
   const [photoToDelete, setPhotoToDelete] = useState<Photo>();
   let userId: string;
 
@@ -54,13 +55,20 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
     }
   }, [match.params.id, items]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const editedItem = { ...item, text, category};
     console.log(editedItem);
+    Storage.get({key: "photos"}).then((photosJson) => {
+        let photos = JSON.parse(photosJson.value);
+        if (!!photos) {
+            let photosToUpload = photos.filter((photo: any) => oldPhotos.indexOf(photo) < 0);
+            createPhotos(token, photosToUpload);
+        }
+    });
     saveItem && saveItem(editedItem).then(() => history.goBack());
   };
 
-  log('render');
+    log('render');
 
   return (
     <IonPage>
@@ -99,13 +107,6 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
           <IonFab vertical="bottom" horizontal="center" slot="fixed">
               <IonFabButton onClick={() => {
                   takePhoto(item?._id);
-                  Storage.get({key: "photos"}).then((photosJson) => {
-                      let photos = JSON.parse(photosJson.value);
-                      if (!!photos) {
-                          let lastPhoto = photos.at(-1);
-                          createPhoto(token, lastPhoto);
-                      }
-                  });
               }} color="success">
                   <IonIcon icon={camera}/>
               </IonFabButton>

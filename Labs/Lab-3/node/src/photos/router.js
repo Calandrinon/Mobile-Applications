@@ -4,19 +4,16 @@ import { broadcast } from "../utils";
 
 export const router = new Router();
 
-const createPhoto = async (ctx, photo, response) => {
-  console.log("Photo:");
-  console.log(photo);
+const createPhotos = async (ctx, photos, response) => {
+  console.log("Photos:");
+  console.log(photos);
   try {
-    console.log("User:");
-    console.log(ctx.state.user);
-    const userId = ctx.state.user._id;
+    const userId = photos.userId;
     console.log("User ID:");
     console.log(userId);
-    photo.userId = userId;
-    response.body = await photoStore.insert(photo);
+    //response.body = await photoStore.insert(photos);
     response.status = 201; // created
-    broadcast(userId, { type: 'created', payload: photo });
+    //broadcast(userId, { type: 'created', payload: photo });
   } catch (err) {
     response.body = { message: err.message };
     console.log("Some error:");
@@ -27,5 +24,5 @@ const createPhoto = async (ctx, photo, response) => {
 
 router.post('/', async ctx => {
   console.log("POST request: uploading a photo...");
-  await createPhoto(ctx, ctx.request.body, ctx.response);
+  await createPhotos(ctx, ctx.request.body, ctx.response);
 });
