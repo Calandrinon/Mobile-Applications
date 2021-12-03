@@ -25,7 +25,7 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
     <IonItem>
         <IonLabel onClick={() => onEdit(_id)}>{text}</IonLabel>
 
-        <IonModal isOpen={showModal} cssClass='my-custom-class'>
+        <IonModal isOpen={showModal} backdropDismiss={false} cssClass='my-custom-class'>
             <IonGrid>
                 <IonRow>
                     {photos.filter((photo) => _id == photo.itemId).map((photo, index) => (
