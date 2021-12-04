@@ -41,6 +41,8 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
   const [photoToDelete, setPhotoToDelete] = useState<Photo>();
   const myLocation = useMyLocation();
   const { latitude: lat, longitude: lng } = myLocation.position?.coords || {}
+    let [latitude, setLatitude] = useState(item?.latitude);
+    let [longitude, setLongitude] = useState(item?.longitude);
   let userId: string;
 
   useEffect(() => {
@@ -75,7 +77,8 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
 
     log('render');
 
-  return (
+  // @ts-ignore
+    return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="success">
@@ -96,12 +99,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
           <IonSelectOption value="Delete">Delete</IonSelectOption>
         </IonSelect>
           <IonModal isOpen={showModal} backdropDismiss={false} cssClass='my-custom-class'>
-              <MyMap
-                  lat={lat}
-                  lng={lng}
-                  onMapClick={log('onMap')}
-                  onMarkerClick={log('onMarker')}
-              />
+              <MyMap lat={lat} lng={lng} targetLat={latitude} targetLng={longitude} onMapClick={onClick()} onMarkerClick={log('onMarker')}/>
               <IonButton color="success" onClick={() => setShowModal(false)}>Close modal</IonButton>
           </IonModal>
           <IonButton color="success" onClick={() => setShowModal(true)}>Select location</IonButton>
@@ -149,6 +147,16 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
       </IonContent>
     </IonPage>
   );
+
+    function onClick() {
+        return (e: any) => {
+            console.log(`latlng:`);
+            console.log(`latitude: ${e.latLng.lat()}`);
+            console.log(`longitude: ${e.latLng.lng()}`);
+            setLatitude(e.latLng.lat());
+            setLongitude(e.latLng.lng());
+        }
+    }
 };
 
 export default ItemEdit;

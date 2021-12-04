@@ -6,6 +6,8 @@ import { mapsApiKey } from './mapsApiKey';
 interface MyMapProps {
     lat?: number | undefined;
     lng?: number | undefined;
+    targetLat?: number | undefined;
+    targetLng?: number | undefined;
     onMapClick: (e: any) => void,
     onMarkerClick: (e: any) => void,
 }
@@ -23,12 +25,19 @@ export const MyMap =
         }),
         withScriptjs,
         withGoogleMap
-    )(props => (
-        //@ts-ignore
-        <GoogleMap defaultZoom={8} defaultCenter={{ lat: props.lat, lng: props.lng }} onClick={props.onMapClick}>
-            {
-                //@ts-ignore
-                <Marker position={{ lat: props.lat, lng: props.lng }} onClick={props.onMarkerClick}/>
-            }
-        </GoogleMap>
-    ))
+    )(props => {
+        console.log(`targetLat: ${props.targetLat}; targetLng: ${props.targetLng}`);
+        return (
+            //@ts-ignore
+            <GoogleMap defaultZoom={8} defaultCenter={{ lat: props.lat, lng: props.lng }} onClick={props.onMapClick}>
+                {
+                    //@ts-ignore
+                    <Marker position={{ lat: props.lat, lng: props.lng }} onClick={props.onMarkerClick}/>
+                }
+                { props.targetLng !== undefined && !props.targetLat !== undefined &&
+                    //@ts-ignore
+                    <Marker position={{ lat: props.targetLat, lng: props.targetLng}} onClick={props.onMarkerClick}/>
+                }
+            </GoogleMap>
+        )
+    })
