@@ -28,7 +28,7 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
         <IonModal isOpen={showModal} backdropDismiss={false} cssClass='my-custom-class'>
             <IonGrid>
                 <IonRow>
-                    {photos.filter((photo) => _id == photo.itemId).map((photo, index) => (
+                    {!!photos && photos.filter((photo) => _id == photo.itemId).map((photo, index) => (
                         <IonCol size="6" key={index}>
                             <IonImg src={photo.webviewPath}/>
                         </IonCol>
