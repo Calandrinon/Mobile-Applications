@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
+    createAnimation,
     IonActionSheet,
     IonButton,
     IonButtons, IonCol,
@@ -44,6 +45,8 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
     let [targetLatitude, setLatitude] = useState(item?.latitude);
     let [targetLongitude, setLongitude] = useState(item?.longitude);
   let userId: string;
+
+  useEffect(simpleAnimation, []);
 
   useEffect(() => {
       (async () => {
@@ -131,7 +134,7 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
           <IonFab vertical="bottom" horizontal="center" slot="fixed">
               <IonFabButton onClick={() => {
                   takePhoto(item?._id);
-              }} color="success">
+              }} color="success" className="photoButton">
                   <IonIcon icon={camera}/>
               </IonFabButton>
           </IonFab>
@@ -166,6 +169,24 @@ const ItemEdit: React.FC<ItemEditProps> = ({ history, match }) => {
             setItem({_id: item?._id, text: String(item?.text), category: String(item?.category), latitude: e.latLng.lat(), longitude: e.latLng.lng()});
             setLatitude(e.latLng.lat());
             setLongitude(e.latLng.lng());
+        }
+    }
+
+    function simpleAnimation() {
+        const el = document.querySelector('.photoButton');
+        if (el) {
+            const animation = createAnimation()
+                .addElement(el)
+                .duration(1000)
+                .direction('alternate')
+                .iterations(Infinity)
+                .keyframes([
+                    { offset: 0, transform: 'scale(1.25)', opacity: '1' },
+                    {
+                        offset: 1, transform: 'scale(1)', opacity: '0.5'
+                    }
+                ]);
+            animation.play();
         }
     }
 };

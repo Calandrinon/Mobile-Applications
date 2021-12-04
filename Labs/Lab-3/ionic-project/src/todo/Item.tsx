@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {IonButton, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonModal, IonRow} from '@ionic/react';
+import {
+    createAnimation,
+    IonButton,
+    IonCol,
+    IonGrid,
+    IonIcon,
+    IonImg,
+    IonItem,
+    IonLabel,
+    IonModal,
+    IonRow
+} from '@ionic/react';
 import { ItemProps } from './ItemProps';
 import {trashOutline} from "ionicons/icons";
 import {deleteItem} from "./itemApi";
@@ -21,11 +32,30 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
             });
     }, []);
 
+    const enterAnimation = (baseEl: any) => {
+        const wrapperAnimation = createAnimation()
+            .addElement(baseEl.querySelector('.modal-wrapper')!)
+            .keyframes([
+                { offset: 0, opacity: '0', transform: 'scale(0)' },
+                { offset: 1, opacity: '1', transform: 'scale(1)' }
+            ]);
+
+        return createAnimation()
+            .addElement(baseEl)
+            .easing('ease-out')
+            .duration(500)
+            .addAnimation([wrapperAnimation]);
+    }
+
+    const leaveAnimation = (baseEl: any) => {
+        return enterAnimation(baseEl).direction('reverse');
+    }
+
   return (
     <IonItem>
         <IonLabel onClick={() => onEdit(_id)}>{text}</IonLabel>
 
-        <IonModal isOpen={showModal} backdropDismiss={false} cssClass='my-custom-class'>
+        <IonModal isOpen={showModal} backdropDismiss={false} enterAnimation={enterAnimation} leaveAnimation={leaveAnimation} cssClass='my-custom-class'>
             <IonGrid>
                 <IonRow>
                     {!!photos && photos.filter((photo) => _id == photo.itemId).map((photo, index) => (
