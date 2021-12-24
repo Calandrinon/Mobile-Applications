@@ -1,19 +1,7 @@
-{"text":"do 1","category":"Do","latitude":47.2262960265258,"longitude":23.262199598437494,"userId":"vI1GMkzBza5i82zj","_id":"toa75jJkboNH4wLZ"}
-{"text":"do 1","category":"Do","latitude":47.23240785450961,"longitude":23.264273434960923,"userId":"vI1GMkzBza5i82zj","_id":"toa75jJkboNH4wLZ"}
-{"text":"do 1","category":"Decide","latitude":47.266196313727555,"longitude":23.251213970312513,"userId":"vI1GMkzBza5i82zj","_id":"toa75jJkboNH4wLZ"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.243826147614044,"longitude":23.26220339843749,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.247555214848184,"longitude":23.25121707031249,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Delete","latitude":47.24121585557153,"longitude":23.262201798437516,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":46.75304664905499,"longitude":23.630248490625004,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
-{"text":"decide1","category":"Decide","latitude":46.77561460641596,"longitude":23.62475552656252,"userId":"vI1GMkzBza5i82zj","_id":"KGDaKMRvrrLmauEf"}
-{"text":"decide1","category":"Decide","latitude":46.77561460641596,"longitude":23.62475552656252,"userId":"vI1GMkzBza5i82zj","_id":"KGDaKMRvrrLmauEf"}
-{"text":"delegate 1","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"C57qYYuLYq6bAo2g"}
-{"_id":"KGDaKMRvrrLmauEf","text":"decide1","category":"Decide","latitude":46.84442991825644,"longitude":23.025998443749998,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Delegate","latitude":47.05067860371427,"longitude":21.8614563625,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Delegate","latitude":46.92214692632642,"longitude":26.38782355,"userId":"vI1GMkzBza5i82zj"}
 {"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Decide","latitude":46.92214692632642,"longitude":26.38782355,"userId":"vI1GMkzBza5i82zj"}
-{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
 {"_id":"KGDaKMRvrrLmauEf","text":"decide1","category":"Decide","latitude":46.84442991825644,"longitude":23.025998443749998,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":47.24754712236882,"longitude":23.2731884265625,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Decide","latitude":46.92214692632642,"longitude":26.38782355,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Decide","latitude":47.17627181233929,"longitude":23.06844726562498,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"toa75jJkboNH4wLZ","text":"do 1","category":"Do","latitude":45.675824529500815,"longitude":25.562949295995086,"userId":"vI1GMkzBza5i82zj"}
