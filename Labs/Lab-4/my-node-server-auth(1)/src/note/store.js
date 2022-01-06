@@ -1,8 +1,8 @@
-import dataStore from 'nedb-promise';
+const Datastore = require('nedb-promises')
 
 export class NoteStore {
   constructor({ filename, autoload }) {
-    this.store = dataStore({ filename, autoload });
+    this.store = Datastore.create({filename, autoload});//new Datastore({ filename, autoload });
   }
   
   async find(props) {
@@ -15,10 +15,16 @@ export class NoteStore {
   
   async insert(note) {
     let noteText = note.text;
+    console.log("From store: ");
+    console.log(note);
+    console.log(noteText)
     if (!noteText) { // validation
       throw new Error('Missing text property')
     }
-    return this.store.insert(note);
+    var data = Object.create({text:note.text, category:note.category, userId:note.userId});
+    console.log(data)
+    console.log({text:note.text, category:note.category, userId:note.userId})
+    return this.store.insert({text:note.text, category:note.category, userId:note.userId});
   };
   
   async update(props, note) {

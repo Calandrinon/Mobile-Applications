@@ -11,16 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ilazar.myapp2.core.TAG
 import com.ilazar.myapp2.databinding.FragmentItemEditBinding
-import com.ilazar.myapp2.todo.data.Item
+import com.ilazar.myapp2.todo.data.Task
 
-class ItemEditFragment : Fragment() {
+class TaskEditFragment : Fragment() {
     companion object {
         const val ITEM_ID = "ITEM_ID"
     }
 
-    private lateinit var viewModel: ItemEditViewModel
+    private lateinit var viewModel: TaskEditViewModel
     private var itemId: String? = null
-    private var item: Item? = null
+    private var task: Task? = null
 
     private var _binding: FragmentItemEditBinding? = null
 
@@ -46,9 +46,11 @@ class ItemEditFragment : Fragment() {
         setupViewModel()
         binding.fab.setOnClickListener {
             Log.v(TAG, "save item")
-            val i = item
+            val i = task
             if (i != null) {
                 i.text = binding.itemText.text.toString()
+                i.category = binding.itemCategory.text.toString()
+
                 viewModel.saveOrUpdateItem(i)
             }
         }
@@ -62,7 +64,7 @@ class ItemEditFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this).get(ItemEditViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TaskEditViewModel::class.java)
         viewModel.fetching.observe(viewLifecycleOwner, { fetching ->
             Log.v(TAG, "update fetching")
             binding.progress.visibility = if (fetching) View.VISIBLE else View.GONE
@@ -85,13 +87,14 @@ class ItemEditFragment : Fragment() {
         })
         val id = itemId
         if (id == null) {
-            item = Item("", "")
+            task = Task("", "", "")
         } else {
             viewModel.getItemById(id).observe(viewLifecycleOwner, {
                 Log.v(TAG, "update items")
                 if (it != null) {
-                    item = it
+                    task = it
                     binding.itemText.setText(it.text)
+                    binding.itemCategory.setText(it.category)
                 }
             })
         }

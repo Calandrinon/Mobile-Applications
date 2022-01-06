@@ -5,21 +5,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ilazar.myapp2.todo.data.Item
+import com.ilazar.myapp2.todo.data.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Item::class], version = 1)
-abstract class TodoDatabase : RoomDatabase() {
+@Database(entities = [Task::class], version = 2)
+abstract class TaskDatabase : RoomDatabase() {
 
-    abstract fun itemDao(): ItemDao
+    abstract fun itemDao(): TaskDao
 
     companion object {
         @Volatile
-        private var INSTANCE: TodoDatabase? = null
+        private var INSTANCE: TaskDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): TodoDatabase {
+        fun getDatabase(context: Context, scope: CoroutineScope): TaskDatabase {
             val inst = INSTANCE
             if (inst != null) {
                 return inst
@@ -27,7 +27,7 @@ abstract class TodoDatabase : RoomDatabase() {
             val instance =
                 Room.databaseBuilder(
                     context.applicationContext,
-                    TodoDatabase::class.java,
+                    TaskDatabase::class.java,
                     "todo_db"
                 )
                     .addCallback(WordDatabaseCallback(scope))
@@ -49,7 +49,7 @@ abstract class TodoDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(itemDao: ItemDao) {
+        suspend fun populateDatabase(taskDao: TaskDao) {
 //            itemDao.deleteAll()
 //            val item = Item("1", "Hello")
 //            itemDao.insert(item)

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">My App2</string>
     <string name="action_settings">Settings</string>
-    <string name="item_list_fragment_label">Item List</string>
-    <string name="item_edit_fragment_label">Item Edit</string>
+    <string name="item_list_fragment_label">Task List</string>
+    <string name="item_edit_fragment_label">Task Edit</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="invalid_username">Not a valid username</string>
@@ -11,4 +11,10 @@
     <string name="sign_in">Sign In</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string-array name="categories_array">
+        <item>Do</item>
+        <item>Decide</item>
+        <item>Delegate</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

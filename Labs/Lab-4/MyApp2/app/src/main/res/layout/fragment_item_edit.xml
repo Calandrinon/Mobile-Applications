@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".todo.item.ItemEditFragment">
+    tools:context=".todo.item.TaskEditFragment">
 
     <ProgressBar
         android:id="@+id/progress"
@@ -14,10 +14,24 @@
         android:backgroundTint="#3CBF24"
         android:visibility="gone" />
 
-    <EditText
-        android:id="@+id/item_text"
+    <LinearLayout
+        android:id="@+id/textLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/item_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/item_category"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
         android:text="" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,5 +42,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="#3CBF24"
         app:srcCompat="@android:drawable/ic_menu_save" />
+
+
 
 </FrameLayout>

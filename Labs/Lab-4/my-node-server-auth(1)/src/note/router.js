@@ -29,13 +29,19 @@ router.get('/:id', async (ctx) => {
 
 const createNote = async (ctx, note, response) => {
   try {
+    console.log("const userId = ctx.state.user._id -> line 33")
     const userId = ctx.state.user._id;
+    console.log("note.userId = userId; -> line 35")
     note.userId = userId;
+    console.log("response.body = await noteStore.insert(note); -> line 37")
     response.body = await noteStore.insert(note);
+    console.log("response.status = 201; -> line 39")
     response.status = 201; // created
+    console.log("broadcast(userId, { type: 'created', payload: note }); -> line 41")
     broadcast(userId, { type: 'created', payload: note });
   } catch (err) {
     response.body = { message: err.message };
+    console.log(response.body);
     response.status = 400; // bad request
   }
 };

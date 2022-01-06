@@ -5,9 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "items")
-data class Item(
+data class Task(
     @PrimaryKey @ColumnInfo(name = "_id") val _id: String,
-    @ColumnInfo(name = "text") var text: String
+    @ColumnInfo(name = "text") var text: String,
+    @ColumnInfo(name = "category") var category: String,
 ) {
-    override fun toString(): String = text
+    override fun toString(): String = "$category-$text"
 }

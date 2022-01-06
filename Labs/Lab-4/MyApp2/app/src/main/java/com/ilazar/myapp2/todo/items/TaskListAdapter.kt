@@ -11,23 +11,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.ilazar.myapp2.R
 import com.ilazar.myapp2.core.TAG
-import com.ilazar.myapp2.todo.data.Item
-import com.ilazar.myapp2.todo.item.ItemEditFragment
+import com.ilazar.myapp2.todo.data.Task
+import com.ilazar.myapp2.todo.item.TaskEditFragment
 
-class ItemListAdapter(
+class TaskListAdapter(
     private val fragment: Fragment,
-) : RecyclerView.Adapter<ItemListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
 
-    var items = emptyList<Item>()
+    var items = emptyList<Task>()
         set(value) {
             field = value
             notifyDataSetChanged();
         }
 
     private var onItemClick: View.OnClickListener = View.OnClickListener { view ->
-        val item = view.tag as Item
+        val item = view.tag as Task
         fragment.findNavController().navigate(R.id.ItemEditFragment, Bundle().apply {
-            putString(ItemEditFragment.ITEM_ID, item._id)
+            putString(TaskEditFragment.ITEM_ID, item._id)
         })
     };
 
@@ -41,7 +41,7 @@ class ItemListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.v(TAG, "onBindViewHolder $position")
         val item = items[position]
-        holder.textView.text = item.text
+        holder.textView.text = item.toString()
         holder.itemView.tag = item
         holder.itemView.setOnClickListener(onItemClick)
     }

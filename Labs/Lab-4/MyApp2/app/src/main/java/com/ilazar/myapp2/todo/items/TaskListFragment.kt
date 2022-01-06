@@ -14,9 +14,9 @@ import com.ilazar.myapp2.auth.data.AuthRepository
 import com.ilazar.myapp2.core.TAG
 import com.ilazar.myapp2.databinding.FragmentItemListBinding
 
-class ItemListFragment : Fragment() {
+class TaskListFragment : Fragment() {
     private var _binding: FragmentItemListBinding? = null
-    private lateinit var itemListAdapter: ItemListAdapter
+    private lateinit var taskListAdapter: TaskListAdapter
     private lateinit var itemsModel: ItemListViewModel
     private val binding get() = _binding!!
 
@@ -44,12 +44,12 @@ class ItemListFragment : Fragment() {
     }
 
     private fun setupItemList() {
-        itemListAdapter = ItemListAdapter(this)
-        binding.itemList.adapter = itemListAdapter
+        taskListAdapter = TaskListAdapter(this)
+        binding.itemList.adapter = taskListAdapter
         itemsModel = ViewModelProvider(this).get(ItemListViewModel::class.java)
         itemsModel.items.observe(viewLifecycleOwner, { value ->
             Log.i(TAG, "update items")
-            itemListAdapter.items = value
+            taskListAdapter.items = value
         })
         itemsModel.loading.observe(viewLifecycleOwner, { loading ->
             Log.i(TAG, "update loading")
