@@ -80,8 +80,8 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
                 <h1>Exam items</h1>
                 {items && (
                     <IonList>
-                      {items.map(({ _id, text , category}) =>
-                          <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)} token={token}/>)}
+                      {items.map(({ _id, text, read, sender, created}) =>
+                          <Item key={_id} _id={_id} text={text} read={read} sender={sender} created={created} onEdit={id => history.push(`/item/${id}`)} token={token}/>)}
                     </IonList>
                 )}
             </IonCol>

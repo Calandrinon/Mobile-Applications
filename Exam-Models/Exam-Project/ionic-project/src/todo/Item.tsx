@@ -22,15 +22,17 @@ interface ItemPropsExt extends ItemProps {
   token: string;
 }
 
-const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => {
-    const [showModal, setShowModal] = useState(false);
-    const [photos, setPhotos] = useState<Photo[]>([]);
+const Item: React.FC<ItemPropsExt> = ({ _id, text, read, sender, created, onEdit, token}) => {
+    // const [showModal, setShowModal] = useState(false);
+    // const [photos, setPhotos] = useState<Photo[]>([]);
+    /**
     useEffect(() => {
         Storage.get({key: "photos"})
             .then((photosJson) => {
                 setPhotos(JSON.parse(photosJson.value));
             });
     }, []);
+     **/
 
     const enterAnimation = (baseEl: any) => {
         const wrapperAnimation = createAnimation()
@@ -53,8 +55,10 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
 
   return (
     <IonItem>
-        <IonLabel onClick={() => onEdit(_id)}>{text}</IonLabel>
+        <IonLabel onClick={() => onEdit(_id)}>{sender} [{created}]: {text}</IonLabel>
+        <IonLabel onClick={() => onEdit(_id)}>Read: {read}</IonLabel>
 
+        {/*
         <IonModal isOpen={showModal} backdropDismiss={false} enterAnimation={enterAnimation} leaveAnimation={leaveAnimation} cssClass='my-custom-class'>
             <IonGrid>
                 <IonRow>
@@ -68,6 +72,7 @@ const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => 
             <IonButton color="success" onClick={() => setShowModal(false)}>Close modal</IonButton>
         </IonModal>
         <IonButton color="success" onClick={() => setShowModal(true)}>Images</IonButton>
+        */}
 
         <IonButton color="success" onClick={() => deleteItem(token, String(_id))}>
             <IonIcon slot="start" icon={trashOutline}/>
