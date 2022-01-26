@@ -57,9 +57,6 @@ const App: React.FC = () => {
                             <Route exact path="/" render={() => <Redirect to="/users"/>}/>
                         </IonRouterOutlet>
                         <IonTabBar slot="bottom" color="success">
-                            <IonTabButton tab="itemsTab" href="/items">
-                                <IonIcon icon={pricetagsOutline} /> Messages
-                            </IonTabButton>
                             <IonTabButton tab="usersTab" href="/users">
                                 <IonIcon icon={person} /> Users
                             </IonTabButton>
