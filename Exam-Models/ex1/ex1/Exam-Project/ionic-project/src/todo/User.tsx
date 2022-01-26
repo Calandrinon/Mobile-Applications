@@ -2,13 +2,15 @@ import React from 'react';
 import {IonCol, IonIcon, IonItem, IonLabel} from '@ionic/react';
 import { UserProps } from './UserProps';
 
-const User: React.FC<UserProps> = ({ _id, username, password, status}) => {
-    let statusAsText: string = status ? "Online" : "Offline / Away";
+interface UserPropsExt extends UserProps {
+    onRead: (_id?: string) => void;
+    token: string;
+}
 
+const User: React.FC<UserPropsExt> = ({ _id, username, password, onRead, status, token}) => {
     return (
         <IonItem>
-            <IonLabel>{username}</IonLabel>
-            <IonLabel>{statusAsText}</IonLabel>
+            <IonLabel onClick={() => onRead(_id)}>User {username}</IonLabel>
         </IonItem>
     );
 };

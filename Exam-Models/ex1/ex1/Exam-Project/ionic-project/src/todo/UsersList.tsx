@@ -56,11 +56,10 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <h1>Users list component</h1>
                 {users && (
                     <IonList>
                         { users && users.map(({ _id, username, password, status}) =>
-                            <User key={_id} _id={_id} username={username} password="" status={status}/>)}
+                            <User key={_id} _id={_id} username={username} password="" status={status} onRead={id => history.push(`/userChat/${id}`)} token={token}/>)}
                     </IonList>
                 )}
             </IonContent>

@@ -37,6 +37,7 @@ import {
 import {Quotes} from "./quotes/Quotes";
 import {QuotesFilter} from "./quotes/QuotesFilter";
 import {QuotesSearch} from "./quotes/QuotesSearch";
+import UserChatComponent from "./todo/UserChatComponent";
 
 const App: React.FC = () => {
     return (
@@ -51,27 +52,16 @@ const App: React.FC = () => {
                                 <PrivateRoute path="/item" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/item/:id" component={ItemEdit} exact={true}/>
                                 <PrivateRoute path="/users" component={UsersList} exact={true}/>
-                                <PrivateRoute path="/quotes" component={Quotes} exact={true}/>
-                                <PrivateRoute path="/filterQuotesByAuthor" component={QuotesFilter} exact={true}/>
-                                <PrivateRoute path="/searchQuotesByAuthor" component={QuotesSearch} exact={true}/>
+                                <PrivateRoute path="/userChat/:id" component={UserChatComponent} exact={true}/>
                             </ItemProvider>
-                            <Route exact path="/" render={() => <Redirect to="/items"/>}/>
+                            <Route exact path="/" render={() => <Redirect to="/users"/>}/>
                         </IonRouterOutlet>
                         <IonTabBar slot="bottom" color="success">
                             <IonTabButton tab="itemsTab" href="/items">
-                                <IonIcon icon={pricetagsOutline} /> Tasks
+                                <IonIcon icon={pricetagsOutline} /> Messages
                             </IonTabButton>
                             <IonTabButton tab="usersTab" href="/users">
                                 <IonIcon icon={person} /> Users
-                            </IonTabButton>
-                            <IonTabButton tab="quotesTab" href="/quotes">
-                                <IonIcon icon={libraryOutline} /> Quotes
-                            </IonTabButton>
-                            <IonTabButton tab="quotesFilteringTab" href="/filterQuotesByAuthor">
-                                <IonIcon icon={beakerOutline} /> Filter quotes
-                            </IonTabButton>
-                            <IonTabButton tab="quotesSearchingTab" href="/searchQuotesByAuthor">
-                                <IonIcon icon={searchOutline}/> Search quotes
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>
