@@ -49,7 +49,7 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
     const [sender, setSender] = useState('');
     const [created, setCreated] = useState(new Date());
     const [item, setItem] = useState<ItemProps>({userId: '', text: text, read: read, sender: sender, created: created});
-    const { id } = useParams();
+    const { id, username } = useParams();
 
     useEffect(() => {
         (async () => {
@@ -57,21 +57,24 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
             setText(item.text);
             setRead(read);
             setCreated(new Date());
-        })();
-
-        items?.sort((firstItem, secondItem) => {
-            let firstDate = new Date(firstItem.created);
-            let secondDate = new Date(secondItem.created);
-            return +firstDate - +secondDate;
+        })().then(() => {
+            /**
+            items?.sort((firstItem, secondItem) => {
+                let firstDate = new Date(firstItem.created);
+                let secondDate = new Date(secondItem.created);
+                return +firstDate - +secondDate;
+            });
+            console.log("Sorted items:");
+            console.log(items);
+             **/
         });
-        console.log("Sorted items:");
-        console.log(items);
     }, []);
 
     const handleSave = async () => {
         const editedItem = { ...item, text, read, created, sender, userId: id};
 
         saveItem && saveItem(editedItem);//.then(() => history.goBack());
+        /**
         items?.sort((firstItem, secondItem) => {
             let firstDate = new Date(firstItem.created);
             let secondDate = new Date(secondItem.created);
@@ -79,6 +82,7 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
         });
         console.log("Sorted items:");
         console.log(items);
+         **/
     };
 
     log('render');
@@ -88,10 +92,10 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
             <IonHeader>
                 <IonToolbar color="success">
                     <IonTitle>
-                        Messages - {networkStatus.networkStatus.connected ? "Online" : "Offline"}
+                        Conversation with user {username} - {networkStatus.networkStatus.connected ? "Online" : "Offline"}
                     </IonTitle>
                     <IonButton slot="end" color="medium" onClick={handleSave}>
-                        Save
+                        Send
                     </IonButton>
 
                     <IonButton slot="end" color="medium" onClick={async () => {

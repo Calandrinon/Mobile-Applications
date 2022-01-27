@@ -55,12 +55,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   function loginCallback(username?: string, password?: string): void {
     log('login');
-
-    setState({
-      ...state,
-      pendingAuthentication: true,
-      username,
-      password
+    getUserId(String(username), token).then((userId) => {
+      setState({
+        ...state,
+        pendingAuthentication: true,
+        username,
+        userId,
+        password
+      });
     });
   }
 
@@ -71,11 +73,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await Storage.remove({key: "token"});
       await Storage.remove({key: "savedTasks"});
       await Storage.remove({key: "username"});
-    })();
-    setState({
-      ...state,
-      isAuthenticated: false,
-      token: ''
+    })().then(() => {
+      setState({
+        ...state,
+        isAuthenticated: false,
+        token: ''
+      });
     });
   }
 

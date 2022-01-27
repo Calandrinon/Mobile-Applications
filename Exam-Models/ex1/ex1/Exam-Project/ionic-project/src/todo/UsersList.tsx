@@ -29,25 +29,26 @@ const log = getLogger('UsersList');
  * **/
 
 const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
-    const { token, username, password, userId } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
     const dummyUserPropsArray: UserProps[] = []
     const [users, setUsers] = useState(dummyUserPropsArray);
     const { appState } = useAppState();
+    const [ loggedUserId, setLoggedUserId ] = useState('');
 
     useEffect(() => {
         const fetchUsers = async () => {
             const response = await getUsers(token);
+            const userId = await Storage.get({key: "userId"});
             console.log("THIS IS THE RESPONSE CONTAINING THE USERS:");
             console.log(response);
+            console.log("THIS IS THE RESPONSE CONTAINING THE USER ID:");
+            console.log(userId);
             setUsers(response);
+            setLoggedUserId(userId.value);
         };
-        console.log("UserID from UsersList:");
-        console.log(userId);
         fetchUsers();
     }, []);
 
-    console.log("These are the users:");
-    console.log(users);
     log('render');
 
     return (
@@ -60,8 +61,16 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
             <IonContent>
                 {users && (
                     <IonList>
-                        { users && users.map(({ _id, username, password, status}) =>
-                            <User key={_id} _id={_id} username={username} password="" status={status} onRead={id => history.push(`/userChat/${id}`)} token={token}/>)}
+                        { users && users.filter(user => {
+                            console.log("UsersList: filter");
+                            console.log("user._id:");
+                            console.log(user._id);
+                            console.log("userId:");
+                            console.log(loggedUserId);
+                            return user._id != loggedUserId;
+                        }).map(({ _id, username, password, status}) =>
+                            <User key={_id} _id={_id} username={username} password="" status={status} onRead={id => history.push(`/userChat/${id}/${username}`)} token={token}/>
+                        )}
                     </IonList>
                 )}
             </IonContent>

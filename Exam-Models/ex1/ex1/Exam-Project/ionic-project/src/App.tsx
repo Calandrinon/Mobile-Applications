@@ -46,7 +46,7 @@ const App: React.FC = () => {
                             <Route path="/login" component={Login} exact={true}/>
                             <ItemProvider>
                                 <PrivateRoute path="/users" component={UsersList} exact={true}/>
-                                <PrivateRoute path="/userChat/:id" component={UserChatComponent} exact={true}/>
+                                <PrivateRoute path="/userChat/:id/:username" component={UserChatComponent} exact={true}/>
                             </ItemProvider>
                             <Route exact path="/" render={() => <Redirect to="/users"/>}/>
                         </IonRouterOutlet>

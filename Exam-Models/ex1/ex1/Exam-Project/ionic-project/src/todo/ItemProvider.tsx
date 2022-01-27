@@ -8,6 +8,7 @@ import {Network, Storage} from "@capacitor/core";
 import {useNetwork} from "../statusHooks/useNetwork";
 import {useAppState} from "../statusHooks/useAppState";
 import {getUsernameById} from "./userApi";
+import Item from "./Item";
 
 const log = getLogger('ItemProvider');
 
@@ -131,6 +132,14 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
           items = await Storage.get({key: "savedTasks"});
           items = JSON.parse(items.value);
         }
+
+        items.sort((firstItem: ItemProps, secondItem: ItemProps) => {
+          let firstDate = new Date(firstItem.created);
+          let secondDate = new Date(secondItem.created);
+          return +firstDate - +secondDate;
+        });
+        console.log("[ItemProvider] Sorted items:");
+        console.log(items);
 
         log('fetchItems succeeded');
         if (!canceled) {
