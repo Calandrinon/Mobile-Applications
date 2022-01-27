@@ -157,8 +157,7 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
         savedItem = await (item._id ? updateItem(token, item) : createItem(token, item));
       } else {
         let userId = await Storage.get({key: "userId"});
-        let dateAsString = new Date().toLocaleDateString();
-        item.created = dateAsString;
+        item.created = new Date();
         item.sender = await getUsernameById(userId.value, token);
         item.read = false;
         savedItem = {...item, userId: userId.value};

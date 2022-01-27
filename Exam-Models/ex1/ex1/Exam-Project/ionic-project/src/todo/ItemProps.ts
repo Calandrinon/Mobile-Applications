@@ -3,6 +3,6 @@ export interface ItemProps {
   text: string;
   read: boolean;
   sender: string;
-  created: string;
+  created: Date;
   userId?: string;
 }

@@ -1,3 +1,0 @@
-1. Rewrite item properties
-2. If a new component has to be created, in order to route it to the list and navigate to it when it is clicked, edit the route in the App.tsx file and use the onClick event binding in the item component
-3. 

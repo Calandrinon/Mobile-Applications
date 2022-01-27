@@ -1,0 +1,7 @@
+1. Rewrite item properties
+2. If a new component has to be created, in order to route it to the list and navigate to it when it is clicked, edit the route in the App.tsx file and use the onClick event binding in the item component
+3. Check if the /api/items endpoint sends a part of the items or all items. 
+4. Filter the messages so that only the messages of the logged-in user and the other user are displayed in the chatbox
+5. Add a timestamp to the message
+6. Sort the messages based on timestamp
+

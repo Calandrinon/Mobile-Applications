@@ -22,9 +22,10 @@ interface ItemPropsExt extends ItemProps {
 }
 
 const Item: React.FC<ItemPropsExt> = ({ _id, text, read, sender, created, token}) => {
+    let date = new Date(created);
   return (
     <IonItem>
-        <IonLabel>User {sender} [{created}]: {text}</IonLabel>
+        <IonLabel>User {sender} [{`${date.getDay()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}]: {text}</IonLabel>
         <IonLabel>Read: {String(read)}</IonLabel>
     </IonItem>
   );

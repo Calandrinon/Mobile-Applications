@@ -47,7 +47,7 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
     const [text, setText] = useState('');
     const [read, setRead] = useState(false);
     const [sender, setSender] = useState('');
-    const [created, setCreated] = useState(new Date().toLocaleDateString());
+    const [created, setCreated] = useState(new Date());
     const [item, setItem] = useState<ItemProps>({userId: '', text: text, read: read, sender: sender, created: created});
     const { id } = useParams();
 
@@ -56,30 +56,29 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
             setSender((await Storage.get({key: "username"})).value);
             setText(item.text);
             setRead(read);
-            setCreated(new Date().toLocaleDateString());
-            console.log("ItemEdit effect item:");
-            console.log(item);
+            setCreated(new Date());
         })();
-        console.log("User ID extracted with the useParams hook from the URL:");
-        console.log(id);
-        console.log("Logged user ID extracted with the useParams hook from the URL:");
-        console.log(loggedUserId);
+
+        items?.sort((firstItem, secondItem) => {
+            let firstDate = new Date(firstItem.created);
+            let secondDate = new Date(secondItem.created);
+            return +firstDate - +secondDate;
+        });
+        console.log("Sorted items:");
+        console.log(items);
     }, []);
 
     const handleSave = async () => {
         const editedItem = { ...item, text, read, created, sender, userId: id};
-        console.log("Text:");
-        console.log(text);
-        console.log("Read:");
-        console.log(read);
-        console.log("Created:");
-        console.log(created);
-        console.log("Sender:");
-        console.log(sender);
-        console.log("Edited item:");
-        console.log(editedItem);
 
         saveItem && saveItem(editedItem);//.then(() => history.goBack());
+        items?.sort((firstItem, secondItem) => {
+            let firstDate = new Date(firstItem.created);
+            let secondDate = new Date(secondItem.created);
+            return +firstDate - +secondDate;
+        });
+        console.log("Sorted items:");
+        console.log(items);
     };
 
     log('render');
@@ -108,16 +107,7 @@ const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedU
                 {items && (
                     <IonList>
                         {items.filter(async (message) => {
-                            console.log(items);
                             let filterBooleanValue = Storage.get({key: "userId"}).then(userId => {
-                                /**
-                                console.log("UserChatComponent - Items filter - id:");
-                                console.log(message.userId);
-                                console.log(id);
-                                console.log("UserChatComponent - Items filter - userId:");
-                                console.log(message.userId);
-                                console.log(userId.value);
-                                 **/
                                 return message.userId === id || message.userId === String(userId.value);
                             });
                             return filterBooleanValue;
