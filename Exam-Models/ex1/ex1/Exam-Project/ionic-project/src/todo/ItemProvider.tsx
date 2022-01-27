@@ -131,10 +131,14 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
           items = await Storage.get({key: "savedTasks"});
           items = JSON.parse(items.value);
         }
+
         log('fetchItems succeeded');
         if (!canceled) {
           dispatch({ type: FETCH_ITEMS_SUCCEEDED, payload: { items } });
         }
+
+        console.log("fetchItems:");
+        console.log(items);
       } catch (error) {
         log('fetchItems failed');
         dispatch({ type: FETCH_ITEMS_FAILED, payload: { error } });

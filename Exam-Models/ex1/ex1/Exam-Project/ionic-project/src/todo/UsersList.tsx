@@ -29,7 +29,7 @@ const log = getLogger('UsersList');
  * **/
 
 const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
-    const { token, username, password } = useContext(AuthContext);
+    const { token, username, password, userId } = useContext(AuthContext);
     const dummyUserPropsArray: UserProps[] = []
     const [users, setUsers] = useState(dummyUserPropsArray);
     const { appState } = useAppState();
@@ -41,6 +41,8 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
             console.log(response);
             setUsers(response);
         };
+        console.log("UserID from UsersList:");
+        console.log(userId);
         fetchUsers();
     }, []);
 

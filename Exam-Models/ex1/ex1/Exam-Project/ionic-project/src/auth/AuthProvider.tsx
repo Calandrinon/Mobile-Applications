@@ -20,6 +20,7 @@ export interface AuthState {
   pendingAuthentication?: boolean;
   username?: string;
   password?: string;
+  userId?: string;
   token: string;
 }
 
@@ -69,6 +70,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await Storage.remove({key: "userId"});
       await Storage.remove({key: "token"});
       await Storage.remove({key: "savedTasks"});
+      await Storage.remove({key: "username"});
     })();
     setState({
       ...state,
@@ -137,6 +139,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           pendingAuthentication: false,
           isAuthenticated: true,
           isAuthenticating: false,
+          userId: userId
         });
       } catch (error) {
         if (canceled) {

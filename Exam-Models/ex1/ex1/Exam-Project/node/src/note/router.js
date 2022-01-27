@@ -7,7 +7,7 @@ export const router = new Router();
 router.get('/', async (ctx) => {
   const response = ctx.response;
   const userId = ctx.state.user._id;
-  response.body = await noteStore.find({ userId });
+  response.body = await noteStore.find({});
   response.status = 200; // ok
 });
 

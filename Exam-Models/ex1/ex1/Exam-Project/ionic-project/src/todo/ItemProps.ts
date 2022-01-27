@@ -4,4 +4,5 @@ export interface ItemProps {
   read: boolean;
   sender: string;
   created: string;
+  userId?: string;
 }

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { RouteComponentProps } from 'react-router';
+import {RouteComponentProps, useParams} from 'react-router';
 import {
     createAnimation,
     IonButton, IonButtons,
@@ -35,7 +35,11 @@ const StyledInput = styled(IonInput)`
   border-radius: 10px;
 `;
 
-const UserChatComponent: React.FC<RouteComponentProps> = ({ history }) => {
+interface UserChatComponentProps extends RouteComponentProps {
+    loggedUserId: string;
+}
+
+const UserChatComponent: React.FC<UserChatComponentProps> = ({ history , loggedUserId}) => {
     const { items, fetching, saving, savingError, saveItem, fetchingError } = useContext(ItemContext);
     const { appState } = useAppState();
     const {logout, token} = useContext(AuthContext);
@@ -44,7 +48,8 @@ const UserChatComponent: React.FC<RouteComponentProps> = ({ history }) => {
     const [read, setRead] = useState(false);
     const [sender, setSender] = useState('');
     const [created, setCreated] = useState(new Date().toLocaleDateString());
-    const [item, setItem] = useState<ItemProps>({text: text, read: read, sender: sender, created: created});
+    const [item, setItem] = useState<ItemProps>({userId: '', text: text, read: read, sender: sender, created: created});
+    const { id } = useParams();
 
     useEffect(() => {
         (async () => {
@@ -55,10 +60,14 @@ const UserChatComponent: React.FC<RouteComponentProps> = ({ history }) => {
             console.log("ItemEdit effect item:");
             console.log(item);
         })();
+        console.log("User ID extracted with the useParams hook from the URL:");
+        console.log(id);
+        console.log("Logged user ID extracted with the useParams hook from the URL:");
+        console.log(loggedUserId);
     }, []);
 
     const handleSave = async () => {
-        const editedItem = { ...item, text, read, created, sender};
+        const editedItem = { ...item, text, read, created, sender, userId: id};
         console.log("Text:");
         console.log(text);
         console.log("Read:");
@@ -98,8 +107,22 @@ const UserChatComponent: React.FC<RouteComponentProps> = ({ history }) => {
                 <IonLoading isOpen={fetching} message="Fetching items"/>
                 {items && (
                     <IonList>
-                        {items.map(({ _id, text, read, sender, created}) =>
-                            <Item key={_id} _id={_id} text={text} read={read} sender={sender} created={created} onEdit={id => history.push(`/item/${id}`)} token={token}/>)}
+                        {items.filter(async (message) => {
+                            console.log(items);
+                            let filterBooleanValue = Storage.get({key: "userId"}).then(userId => {
+                                /**
+                                console.log("UserChatComponent - Items filter - id:");
+                                console.log(message.userId);
+                                console.log(id);
+                                console.log("UserChatComponent - Items filter - userId:");
+                                console.log(message.userId);
+                                console.log(userId.value);
+                                 **/
+                                return message.userId === id || message.userId === String(userId.value);
+                            });
+                            return filterBooleanValue;
+                        }).map(({ _id, text, read, sender, created}) =>
+                            <Item key={_id} _id={_id} text={text} read={read} sender={sender} created={created} token={token}/>)}
                     </IonList>
                 )}
                 <IonLabel>Write a message:</IonLabel>

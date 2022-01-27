@@ -18,11 +18,10 @@ import {Storage} from "@capacitor/core";
 import {Photo} from "../mediaContentHooks/usePhotoGallery";
 
 interface ItemPropsExt extends ItemProps {
-  onEdit: (_id?: string) => void;
   token: string;
 }
 
-const Item: React.FC<ItemPropsExt> = ({ _id, text, read, sender, created, onEdit, token}) => {
+const Item: React.FC<ItemPropsExt> = ({ _id, text, read, sender, created, token}) => {
   return (
     <IonItem>
         <IonLabel>User {sender} [{created}]: {text}</IonLabel>
