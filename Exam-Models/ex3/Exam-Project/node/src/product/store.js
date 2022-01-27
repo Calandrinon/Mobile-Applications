@@ -1,6 +1,6 @@
 import dataStore from 'nedb-promise';
 
-export class PhotoStore {
+export class ProductStore {
   constructor({ filename, autoload }) {
     this.store = dataStore({ filename, autoload });
   }
@@ -13,10 +13,15 @@ export class PhotoStore {
     return this.store.findOne(props);
   }
   
-  async insert(photo, userId) {
-    return this.store.insert({photo, userId});
+  async insert(note) {
+    console.log(note);
+    return this.store.insert(note);
   };
-
+  
+  async update(props, note) {
+    return this.store.update(props, note);
+  }
+  
   async remove(props) {
     return this.store.remove(props);
   }
@@ -28,4 +33,4 @@ export class PhotoStore {
   }
 }
 
-export default new PhotoStore({ filename: './db/photos.json', autoload: true });
+export default new ProductStore ({ filename: './db/products.json', autoload: true });

@@ -1,6 +1,6 @@
 import dataStore from 'nedb-promise';
 
-export class NoteStore {
+export class ItemStore {
   constructor({ filename, autoload }) {
     this.store = dataStore({ filename, autoload });
   }
@@ -14,10 +14,7 @@ export class NoteStore {
   }
   
   async insert(note) {
-    let noteText = note.text;
-    if (!noteText) { // validation
-      throw new Error('Missing text property')
-    }
+    console.log(note);
     return this.store.insert(note);
   };
   
@@ -36,4 +33,4 @@ export class NoteStore {
   }
 }
 
-export default new NoteStore({ filename: './db/notes.json', autoload: true });
+export default new ItemStore({ filename: './db/inventory.json', autoload: true });

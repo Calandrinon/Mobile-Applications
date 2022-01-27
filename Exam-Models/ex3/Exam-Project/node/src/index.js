@@ -4,13 +4,11 @@ import http from 'http';
 import Router from 'koa-router';
 import bodyParser from "koa-bodyparser";
 import { timingLogger, exceptionHandler, jwtConfig, initWss, broadcast, verifyClient } from './utils';
-import { router as noteRouter} from './note';
+import { router as inventoryRouter} from './item';
+import { router as productRouter} from './product';
 import { router as authRouter } from './auth';
-import { router as photoRouter } from './photos';
 import jwt from 'koa-jwt';
 import cors from '@koa/cors';
-import noteStore from "./note/store";
-
 const app = new Koa();
 const server = http.createServer(app.callback());
 const wss = new WebSocket.Server({ server });
@@ -25,13 +23,10 @@ app.use(bodyParser({
 
 const prefix = '/api';
 
-let categories = ['Do', 'Decide', 'Delegate', 'Delete'];
-
 // public
 const publicApiRouter = new Router({ prefix });
 publicApiRouter
   .use('/auth', authRouter.routes())
-  .use('/photo', photoRouter.routes());
 app
   .use(publicApiRouter.routes())
   .use(publicApiRouter.allowedMethods());
@@ -41,7 +36,8 @@ app.use(jwt(jwtConfig));
 // protected
 const protectedApiRouter = new Router({ prefix });
 protectedApiRouter
-  .use('/item', noteRouter.routes());
+  .use('/item', inventoryRouter.routes())
+    .use('/product', productRouter.routes())
 app
   .use(protectedApiRouter.routes())
   .use(protectedApiRouter.allowedMethods());

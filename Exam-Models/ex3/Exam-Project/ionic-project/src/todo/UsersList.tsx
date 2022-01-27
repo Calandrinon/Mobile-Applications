@@ -52,7 +52,7 @@ const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar color="success">
-                    <IonTitle>Users</IonTitle>
+                    <IonTitle>Inventory</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

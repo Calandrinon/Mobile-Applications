@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import noteStore from './store';
+import productStore from './store';
 import { broadcast } from "../utils";
 
 export const router = new Router();
@@ -7,13 +7,13 @@ export const router = new Router();
 router.get('/', async (ctx) => {
   const response = ctx.response;
   const userId = ctx.state.user._id;
-  response.body = await noteStore.find({ userId });
-  response.status = 200; // ok
+  response.body = await productStore.find({ });
+  response.status = 200;
 });
 
 router.get('/:id', async (ctx) => {
   const userId = ctx.state.user._id;
-  const note = await noteStore.findOne({ _id: ctx.params.id });
+  const note = await productStore.findOne({ _id: ctx.params.id });
   const response = ctx.response;
   if (note) {
     if (note.userId === userId) {
@@ -27,22 +27,22 @@ router.get('/:id', async (ctx) => {
   }
 });
 
-const createNote = async (ctx, note, response) => {
+const createInventoryItem = async (ctx, note, response) => {
   try {
     const userId = ctx.state.user._id;
     console.log("USER ID:");
     console.log(userId);
-    note.userId = userId;
-    response.body = await noteStore.insert(note);
+    response.body = await productStore.insert(note);
     response.status = 201; // created
     broadcast(userId, { type: 'created', payload: note });
   } catch (err) {
     response.body = { message: err.message };
+    console.log(response.body);
     response.status = 400; // bad request
   }
 };
 
-router.post('/', async ctx => await createNote(ctx, ctx.request.body, ctx.response));
+router.post('/', async ctx => await createInventoryItem(ctx, ctx.request.body, ctx.response));
 
 router.put('/:id', async (ctx) => {
   const note = ctx.request.body;
@@ -55,11 +55,11 @@ router.put('/:id', async (ctx) => {
     return;
   }
   if (!noteId) {
-    await createNote(ctx, note, response);
+    await createInventoryItem(ctx, note, response);
   } else {
     const userId = ctx.state.user._id;
     note.userId = userId;
-    const updatedCount = await noteStore.update({ _id: id }, note);
+    const updatedCount = await productStore.update({ _id: id }, note);
     if (updatedCount === 1) {
       response.body = note;
       response.status = 200; // ok
@@ -73,32 +73,11 @@ router.put('/:id', async (ctx) => {
 
 router.del('/:id', async (ctx) => {
   const userId = ctx.state.user._id;
-  const note = await noteStore.findOne({ _id: ctx.params.id });
+  const note = await productStore.findOne({ _id: ctx.params.id });
   if (note && userId !== note.userId) {
     ctx.response.status = 403; // forbidden
   } else {
-    await noteStore.remove({ _id: ctx.params.id });
+    await productStore.remove({ _id: ctx.params.id });
     ctx.response.status = 200;
   }
-});
-
-
-router.post('/synchronize', async (ctx) => {
-  const request = ctx.request;
-  const response = ctx.response;
-  console.log("ITEMS TO BE SYNCHRONIZED:");
-  console.log(request.body);
-  let offlineItems = request.body;
-  let currentlySavedItems = await noteStore.getAll(offlineItems[0].userId);
-
-  for (let item of offlineItems) {
-    if ("_id" in item) {
-      await noteStore.update({_id: item._id}, item);
-    } else {
-      await noteStore.insert(item);
-    }
-  }
-
-  response.body = await noteStore.getAll(offlineItems[0].userId);
-  response.status = 200;
 });

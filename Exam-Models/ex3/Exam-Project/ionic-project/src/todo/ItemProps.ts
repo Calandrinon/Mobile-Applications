@@ -2,9 +2,9 @@ import {Category} from "./Category";
 
 export interface ItemProps {
   _id?: string;
-  text: string;
-  category: string;
-  latitude?: number | undefined;
-  longitude?: number | undefined;
+  name: string;
+  productId: number;
+  quantity: number;
+  version: number;
 }
 
