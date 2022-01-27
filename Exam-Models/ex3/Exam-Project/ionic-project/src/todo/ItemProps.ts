@@ -1,7 +1,10 @@
+import {Category} from "./Category";
+
 export interface ItemProps {
   _id?: string;
   text: string;
-  read: boolean;
-  sender: string;
-  created: string;
+  category: string;
+  latitude?: number | undefined;
+  longitude?: number | undefined;
 }
+

@@ -7,7 +7,6 @@ import { AuthContext } from '../auth';
 import {Network, Storage} from "@capacitor/core";
 import {useNetwork} from "../statusHooks/useNetwork";
 import {useAppState} from "../statusHooks/useAppState";
-import {getUsernameById} from "./userApi";
 
 const log = getLogger('ItemProvider');
 
@@ -146,17 +145,11 @@ export const ItemProvider: React.FC<ItemProviderProps> = ({ children }) => {
     try {
       log('saveItem started');
       dispatch({ type: SAVE_ITEM_STARTED });
-      console.log("saveItemCallback item:");
-      console.log(item);
       let savedItem;
       if (navigator.onLine) {
         savedItem = await (item._id ? updateItem(token, item) : createItem(token, item));
       } else {
         let userId = await Storage.get({key: "userId"});
-        let dateAsString = new Date().toLocaleDateString();
-        item.created = dateAsString;
-        item.sender = await getUsernameById(userId.value, token);
-        item.read = false;
         savedItem = {...item, userId: userId.value};
         let savedTasks = JSON.parse((await Storage.get({key: "savedTasks"})).value);
         savedTasks.push(savedItem);

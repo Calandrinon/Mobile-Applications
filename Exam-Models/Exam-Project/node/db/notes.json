@@ -1,27 +1,6 @@
-{"text":"some other item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"8InaoPvC0oyLW59N"}
-{"text":"some item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"oVJlKgjwj7pdjcth"}
-{"text":"yet another item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"f09rOBLZIeBIOFw4"}
-{"text":"test item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"tuwJqiLaZzQQsitc"}
-{"text":"dumb item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"opvwgVYaiYs1aN3M"}
-{"text":"some other interesting item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"knNUVhZ86kdPe6MT"}
-{"text":"some cool item","read":false,"created":"","sender":"","userId":"vI1GMkzBza5i82zj","_id":"6FwxdPt9oaLJGF1O"}
-{"$$deleted":true,"_id":"6FwxdPt9oaLJGF1O"}
-{"$$deleted":true,"_id":"8InaoPvC0oyLW59N"}
-{"$$deleted":true,"_id":"f09rOBLZIeBIOFw4"}
-{"$$deleted":true,"_id":"knNUVhZ86kdPe6MT"}
-{"$$deleted":true,"_id":"oVJlKgjwj7pdjcth"}
-{"$$deleted":true,"_id":"opvwgVYaiYs1aN3M"}
-{"text":"test item 2","read":false,"created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"NtoFeYnCwXIXiDt6"}
-{"$$deleted":true,"_id":"NtoFeYnCwXIXiDt6"}
-{"$$deleted":true,"_id":"tuwJqiLaZzQQsitc"}
-{"text":"test item","read":false,"created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"TKBCeccsOIfPh4H2"}
-{"text":"test item 2","read":false,"created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"mVb9icBUKnQSc5u8"}
-{"text":"test item 3","read":false,"created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"mjdMa5S6VfaEdYdi"}
-{"text":"test item 4","read":false,"created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"oPAcayrlH6Lxztft"}
-{"text":"test item 5","read":false,"sender":"a","created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"HCkBcVOVJcxqztii"}
-{"$$deleted":true,"_id":"TKBCeccsOIfPh4H2"}
-{"$$deleted":true,"_id":"mVb9icBUKnQSc5u8"}
-{"$$deleted":true,"_id":"mjdMa5S6VfaEdYdi"}
-{"$$deleted":true,"_id":"oPAcayrlH6Lxztft"}
-{"$$deleted":true,"_id":"HCkBcVOVJcxqztii"}
-{"text":"Hello! I am new to this app, seems like it doesn't have enough features. Where can I write recommendations for the devs?","read":false,"sender":"a","created":"1/26/2022","userId":"vI1GMkzBza5i82zj","_id":"UmZbH85jfOodhSv8"}
+{"text":"do2","category":"Do","latitude":46.58452233049637,"longitude":24.546157498437505,"userId":"vI1GMkzBza5i82zj","_id":"2IB2l9D5E3ckE70i"}
+{"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Decide","latitude":47.17627181233929,"longitude":23.06844726562498,"userId":"vI1GMkzBza5i82zj"}
+{"_id":"KGDaKMRvrrLmauEf","text":"decide1","category":"Decide","latitude":46.84442991825644,"longitude":23.025998443749998,"userId":"vI1GMkzBza5i82zj"}
+{"text":"do4","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"P1yYDqW0iQwIdh3W"}
+{"text":"do5","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"t9uXPuUQvZhnteja"}
+{"text":"do3","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"wKd2oDJ5h7S0rwTM"}

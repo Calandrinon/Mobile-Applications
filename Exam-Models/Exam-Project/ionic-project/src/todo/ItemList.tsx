@@ -62,7 +62,7 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
       <IonHeader>
         <IonToolbar color="success">
           <IonTitle>
-            Messages - {networkStatus.networkStatus.connected ? "Online" : "Offline"}
+            Exam - {networkStatus.networkStatus.connected ? "Online" : "Offline"}
           </IonTitle>
           <IonButton slot="end" color="medium" onClick={async () => {
             let userId = await Storage.get({key: "userId"});
@@ -77,10 +77,11 @@ const ItemList: React.FC<RouteComponentProps> = ({ history }) => {
         <IonGrid>
           <IonRow>
             <IonCol>
+                <h1>Exam items</h1>
                 {items && (
                     <IonList>
-                      {items.map(({ _id, text, read, sender, created}) =>
-                          <Item key={_id} _id={_id} text={text} read={read} sender={sender} created={created} onEdit={id => history.push(`/item/${id}`)} token={token}/>)}
+                      {items.map(({ _id, text , category}) =>
+                          <Item key={_id} _id={_id} text={text} category={category} onEdit={id => history.push(`/item/${id}`)} token={token}/>)}
                     </IonList>
                 )}
             </IonCol>

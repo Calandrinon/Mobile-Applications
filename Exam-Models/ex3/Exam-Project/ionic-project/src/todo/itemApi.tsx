@@ -10,8 +10,6 @@ export const getItems: (token: string) => Promise<ItemProps[]> = token => {
 }
 
 export const createItem: (token: string, item: ItemProps) => Promise<ItemProps[]> = (token, item) => {
-  console.log("API Call createItem -> Item to be sent:");
-  console.log(item);
   return withLogs(axios.post(itemUrl, item, authConfig(token)), 'createItem');
 }
 

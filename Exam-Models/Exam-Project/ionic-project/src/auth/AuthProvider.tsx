@@ -123,10 +123,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           value: userId.id
         });
         await Storage.set({
-          key: "username",
-          value: String(username)
-        });
-        await Storage.set({
           key: "token",
           value: token
         });
