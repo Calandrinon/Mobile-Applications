@@ -14,10 +14,6 @@ export class NoteStore {
   }
   
   async insert(note) {
-    let noteText = note.text;
-    if (!noteText) { // validation
-      throw new Error('Missing text property')
-    }
     return this.store.insert(note);
   };
   
@@ -37,3 +33,4 @@ export class NoteStore {
 }
 
 export default new NoteStore({ filename: './db/notes.json', autoload: true });
+

@@ -38,3 +38,26 @@ do
 	mv $filepath_of_temporary_file $actual_filepath	
 done	
 
+
+path_of_backend_directory_to_be_copied="Exam-Project/node/src/note"
+new_backend_directory_path="Exam-Project/node/src/${item_type}s"
+cp -r $path_of_backend_directory_to_be_copied $new_backend_directory_path 
+
+backend_files=`ls -1 ${new_backend_directory_path} | tail -n +2`
+
+for new_file in $backend_files;
+do
+	uppercase_item="${item_type^}"
+	echo $new_file
+	actual_filepath="${new_backend_directory_path}/${new_file}"
+	filepath_of_temporary_file="${new_backend_directory_path}/tmp.tsx"
+	touch $filepath_of_temporary_file
+	cat $actual_filepath | while read -r line
+	do
+		content_with_replacements=`echo $line | sed "s/note/${item_type}/g" | sed "s/Note/$uppercase_item/g" `
+		echo $content_with_replacements >> $filepath_of_temporary_file
+	done
+	rm $actual_filepath
+	mv $filepath_of_temporary_file $actual_filepath	
+done	
+
