@@ -22,7 +22,7 @@ onEdit: (_id?: string) => void;
 token: string;
 }
 
-const Product: React.FC<ProductPropsExt> = ({ _id, text, category, onEdit, token}) => {
+const Product: React.FC<ProductPropsExt> = ({ _id, text, onEdit, token}) => {
 const [showModal, setShowModal] = useState(false);
 const [photos, setPhotos] = useState<Photo[]>([]);
 useEffect(() => {
@@ -58,7 +58,7 @@ return (
 <IonModal isOpen={showModal} backdropDismiss={false} enterAnimation={enterAnimation} leaveAnimation={leaveAnimation} cssClass='my-custom-class'>
 <IonGrid>
 <IonRow>
-{!!photos && photos.filter((photo) => _id == photo.productId).map((photo, index) => (
+{!!photos && photos.filter((photo) => _id == photo.itemId).map((photo, index) => (
 <IonCol size="6" key={index}>
 <IonImg src={photo.webviewPath}/>
 </IonCol>

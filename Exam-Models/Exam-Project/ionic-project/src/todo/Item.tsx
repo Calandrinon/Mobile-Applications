@@ -22,7 +22,7 @@ interface ItemPropsExt extends ItemProps {
   token: string;
 }
 
-const Item: React.FC<ItemPropsExt> = ({ _id, text, category, onEdit, token}) => {
+const Item: React.FC<ItemPropsExt> = ({ _id, text, onEdit, token}) => {
     const [showModal, setShowModal] = useState(false);
     const [photos, setPhotos] = useState<Photo[]>([]);
     useEffect(() => {

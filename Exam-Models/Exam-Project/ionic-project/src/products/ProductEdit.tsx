@@ -123,7 +123,7 @@ Save
 )}
 <IonGrid>
 <IonRow>
-{photos.filter((photo) => product?._id == photo.productId).map((photo, index) => (
+{photos.filter((photo) => product?._id == photo.itemId).map((photo, index) => (
 <IonCol size="6" key={index}>
 <IonImg onClick={() => setPhotoToDelete(photo)}
 src={photo.webviewPath}/>
