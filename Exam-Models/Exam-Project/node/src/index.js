@@ -3,17 +3,17 @@ import WebSocket from 'ws';
 import http from 'http';
 import Router from 'koa-router';
 import bodyParser from "koa-bodyparser";
-import { timingLogger, exceptionHandler, jwtConfig, initWss, broadcast, verifyClient } from './utils';
-import { router as noteRouter} from './note';
-import { router as authRouter } from './auth';
-import { router as photoRouter } from './photos';
+import {timingLogger, exceptionHandler, jwtConfig, initWss, broadcast, verifyClient} from './utils';
+import {router as noteRouter} from './note';
+import {router as productRouter} from './products';
+import {router as authRouter} from './auth';
+import {router as photoRouter} from './photos';
 import jwt from 'koa-jwt';
 import cors from '@koa/cors';
-import noteStore from "./note/store";
 
 const app = new Koa();
 const server = http.createServer(app.callback());
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({server});
 initWss(wss);
 
 app.use(cors());
@@ -28,23 +28,24 @@ const prefix = '/api';
 let categories = ['Do', 'Decide', 'Delegate', 'Delete'];
 
 // public
-const publicApiRouter = new Router({ prefix });
+const publicApiRouter = new Router({prefix});
 publicApiRouter
-  .use('/auth', authRouter.routes())
-  .use('/photo', photoRouter.routes());
+    .use('/auth', authRouter.routes())
+    .use('/photo', photoRouter.routes());
 app
-  .use(publicApiRouter.routes())
-  .use(publicApiRouter.allowedMethods());
+    .use(publicApiRouter.routes())
+    .use(publicApiRouter.allowedMethods());
 
 app.use(jwt(jwtConfig));
 
 // protected
-const protectedApiRouter = new Router({ prefix });
+const protectedApiRouter = new Router({prefix});
 protectedApiRouter
-  .use('/item', noteRouter.routes());
+    .use('/item', noteRouter.routes())
+    .use('/product', productRouter.routes());
 app
-  .use(protectedApiRouter.routes())
-  .use(protectedApiRouter.allowedMethods());
+    .use(protectedApiRouter.routes())
+    .use(protectedApiRouter.allowedMethods());
 
 
 server.listen(3000);
