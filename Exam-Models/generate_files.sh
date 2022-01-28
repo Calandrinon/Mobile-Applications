@@ -27,7 +27,7 @@ do
 	touch $filepath_of_temporary_file
 	cat $actual_filepath | while read -r line
 	do
-		content_with_replacements=`echo $line | sed "s/Item/${uppercase_item}/g" | sed "s/item/${item_type}/g"`
+		content_with_replacements=`echo $line | sed "s/Item/${uppercase_item}/g" | sed "s/item/${item_type}/g" | sed "s/Ion${uppercase_item}/IonItem/g"`
 		echo $content_with_replacements >> $filepath_of_temporary_file
 	done
 	rm $actual_filepath
