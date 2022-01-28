@@ -23,7 +23,7 @@ import {AuthContext} from "../auth";
 import {Storage} from "@capacitor/core";
 import {updateUserStatus} from "./userApi";
 import {useNetwork} from "../statusHooks/useNetwork";
-import {deleteItem} from "./itemApi";
+import {deleteItem} from "./ItemApi";
 import AnimationDemo from "../animations/AnimationDemo";
 
 const log = getLogger('ItemList');

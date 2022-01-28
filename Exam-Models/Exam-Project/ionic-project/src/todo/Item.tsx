@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import { ItemProps } from './ItemProps';
 import {trashOutline} from "ionicons/icons";
-import {deleteItem} from "./itemApi";
+import {deleteItem} from "./ItemApi";
 import {Storage} from "@capacitor/core";
 import {Photo} from "../mediaContentHooks/usePhotoGallery";
 

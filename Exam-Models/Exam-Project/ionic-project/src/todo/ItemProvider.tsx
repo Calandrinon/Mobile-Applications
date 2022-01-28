@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useEffect, useReducer, useState} from 'r
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
 import { ItemProps } from './ItemProps';
-import {createItem, getItems, newWebSocket, sendNewOfflineDataToServer, updateItem} from './itemApi';
+import {createItem, getItems, newWebSocket, sendNewOfflineDataToServer, updateItem} from './ItemApi';
 import { AuthContext } from '../auth';
 import {Network, Storage} from "@capacitor/core";
 import {useNetwork} from "../statusHooks/useNetwork";

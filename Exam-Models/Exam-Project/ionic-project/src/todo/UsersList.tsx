@@ -23,11 +23,6 @@ import {Storage} from "@capacitor/core";
 
 const log = getLogger('UsersList');
 
-/**
- * 1. Solve the local storage task for storing auth token and user ID
- * 2. Solve the user status task
- * **/
-
 const UsersList: React.FC<RouteComponentProps> = ({ history }) => {
     const { token, username, password } = useContext(AuthContext);
     const dummyUserPropsArray: UserProps[] = []
