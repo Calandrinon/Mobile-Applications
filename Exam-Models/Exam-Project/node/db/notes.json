@@ -2,8 +2,9 @@
 {"_id":"C57qYYuLYq6bAo2g","text":"delegate 1","category":"Decide","latitude":47.17627181233929,"longitude":23.06844726562498,"userId":"vI1GMkzBza5i82zj"}
 {"_id":"KGDaKMRvrrLmauEf","text":"decide1","category":"Decide","latitude":46.84442991825644,"longitude":23.025998443749998,"userId":"vI1GMkzBza5i82zj"}
 {"text":"do4","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"P1yYDqW0iQwIdh3W"}
+{"text":"test item","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"RbNkhYW4Z2I6EEAa"}
 {"text":"stuff","category":"Decide","userId":"vI1GMkzBza5i82zj","_id":"bnMb5UPscnOu8FrU"}
+{"text":"some item","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"ojKrVPXumDME88xB"}
 {"text":"do5","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"t9uXPuUQvZhnteja"}
 {"text":"do3","category":"Do","userId":"vI1GMkzBza5i82zj","_id":"wKd2oDJ5h7S0rwTM"}
-{"text":"some item","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"ojKrVPXumDME88xB"}
-{"text":"test item","category":"Delegate","userId":"vI1GMkzBza5i82zj","_id":"RbNkhYW4Z2I6EEAa"}
+{"text":"yet another item","category":"Delete","userId":"vI1GMkzBza5i82zj","_id":"KWLxjICv9DojXJjH"}

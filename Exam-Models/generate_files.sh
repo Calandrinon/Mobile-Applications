@@ -1,5 +1,9 @@
 #!/bin/bash
-# Give to the script as a parameter the name of the type of item that represents the module
+
+# Give to the script as a parameter the name of the type of item that represents the module.
+# In order to reformat and indent the code at the end, use the reformatting feature from Webstorm
+# by right-clicking the files and pressing "Reformat code", then select the "Rearrange entries" option
+
 item_type=$1
 path_of_directory_to_be_copied="Exam-Project/ionic-project/src/todo"
 new_directory_path="Exam-Project/ionic-project/src/${item_type}s"
